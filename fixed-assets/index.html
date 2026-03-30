@@ -555,6 +555,8 @@ footer{max-width:1120px;margin:0 auto;padding:20px 40px 48px;border-top:1px soli
 .bricks-answer{max-width:100%}
 /* Moment 3 */
 .m3-race{min-height:auto}
+/* Switching section */
+.switching-grid{grid-template-columns:1fr !important}
 .m3-panels{grid-template-columns:1fr;gap:24px}
 .m3-divider{display:none}
 .m3-panel-left,.m3-panel-right{padding:0}
@@ -1232,6 +1234,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
     <span class="tick">✓</span>PDF, Excel, and CSV export <span class="sep">·</span>
     <span class="tick">✓</span>Audit-ready reporting
   </div>
+  <div style="margin-top:28px"><a href="#" data-track-cta="cta_click_mid1" onclick="openModal(event)" class="cta">Book a walkthrough →</a></div>
 </section>
 
 <!-- ═══ S4: PROOF ═══ -->
@@ -1258,6 +1261,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
         <div class="pq-attr">Finance Director, Medical Practice</div>
       </div>
     </div>
+    <div style="text-align:center;margin-top:32px"><a href="#" data-track-cta="cta_click_mid2" onclick="openModal(event)" class="cta" style="background:#fff;color:var(--ink);border:1px solid rgba(255,255,255,.3)">Book a walkthrough →</a></div>
   </div>
 </section>
 
@@ -1275,12 +1279,22 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 
 <!-- ═══ S6: SWITCHING ═══ -->
 <section class="switching">
-  <div class="switching-inner reveal">
-    <h2>You're live before your next monthly close.</h2>
-    <div class="sw-step"><strong>Send us your file.</strong><p>Spreadsheet, Bloomberg Tax export, Sage file, or any CSV. No reformatting needed.</p></div>
-    <div class="sw-step"><strong>We map and verify.</strong><p>We import your assets, match your fields, and verify every calculation against what you've already reported. Your beginning balances carry over, locked and immutable. We calculate forward from there.</p></div>
-    <div class="sw-step"><strong>You're running.</strong><p>Review your numbers, run your first reports, close the month.</p></div>
-    <div class="guarantee">You don't pay until you're live.</div>
+  <div style="max-width:1120px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center" class="switching-grid">
+    <div class="switching-inner reveal">
+      <h2>You're live before your next monthly close.</h2>
+      <div class="sw-step"><strong>Send us your file.</strong><p>Spreadsheet, Bloomberg Tax export, Sage file, or any CSV. No reformatting needed.</p></div>
+      <div class="sw-step"><strong>We map and verify.</strong><p>We import your assets, match your fields, and verify every calculation against what you've already reported. Your beginning balances carry over, locked and immutable. We calculate forward from there.</p></div>
+      <div class="sw-step"><strong>You're running.</strong><p>Review your numbers, run your first reports, close the month.</p></div>
+      <div class="guarantee">You don't pay until you're live.</div>
+    </div>
+    <div class="reveal" style="display:flex;justify-content:center">
+      <div id="switchDropZone" style="width:100%;max-width:340px;border:2px dashed var(--rule-dark);border-radius:12px;padding:48px 32px;text-align:center;cursor:pointer;transition:all 0.2s ease" onclick="openModal(event)">
+        <div style="font-size:32px;color:var(--light);margin-bottom:12px">&#8593;</div>
+        <div style="font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">Drop your spreadsheet here</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--light);margin-bottom:16px">.csv &nbsp; .xlsx &nbsp; .xls &nbsp; .pdf</div>
+        <div style="font-size:14px;color:var(--mid)">Or <a href="#" onclick="openModal(event)" style="color:var(--accent);text-decoration:none;font-weight:500">book a walkthrough</a> and we'll handle it.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2518,6 +2532,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Open the booking modal after a brief pause
+    setTimeout(function() { openModal(); }, 2000);
+  });
+})();
+
+// ═══ SWITCHING DROP ZONE ═══
+(function() {
+  var zone = document.getElementById('switchDropZone');
+  if (!zone) return;
+
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    zone.style.borderColor = 'var(--accent)';
+    zone.style.background = 'rgba(200,120,95,0.04)';
+  });
+  zone.addEventListener('dragleave', function() {
+    zone.style.borderColor = '';
+    zone.style.background = '';
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    zone.style.background = '';
+
+    var files = e.dataTransfer ? e.dataTransfer.files : [];
+    var fileNames = [];
+    var totalSize = 0;
+    for (var i = 0; i < files.length; i++) {
+      fileNames.push(files[i].name);
+      totalSize += files[i].size;
+    }
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'switching_file_dropped', {
+        page: window.location.pathname,
+        file_count: files.length,
+        file_names: fileNames.join(', '),
+        total_size_kb: Math.round(totalSize / 1024)
+      });
+    }
+
+    zone.innerHTML = '<div style="font-size:24px;color:var(--accent);margin-bottom:12px">✓</div>' +
+      '<div style="font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">' + fileNames[0] + (files.length > 1 ? ' + ' + (files.length - 1) + ' more' : '') + '</div>' +
+      '<div style="font-size:14px;color:var(--accent);margin-top:12px">We see you\'re ready. Let\'s get your data loaded.</div>';
+
     setTimeout(function() { openModal(); }, 2000);
   });
 })();
