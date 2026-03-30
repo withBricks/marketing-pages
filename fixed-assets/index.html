@@ -123,7 +123,6 @@ nav{max-width:1120px;margin:0 auto;padding:24px 40px;display:flex;justify-conten
 /* Buttons */
 .cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:14px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;border:none;border-radius:2px;cursor:pointer;text-decoration:none;transition:background .2s}
 .cta:hover{background:var(--accent-hover)}
-.cta:hover{background:#333}
 .cta-accent{background:var(--accent);color:#fff}
 .cta-accent:hover{background:var(--accent-hover)}
 
@@ -487,7 +486,7 @@ nav{max-width:1120px;margin:0 auto;padding:24px 40px;display:flex;justify-conten
 .proof-card blockquote{font-family:'Source Serif 4',serif;font-style:italic;line-height:1.6;color:rgba(255,255,255,.8);margin:0}
 .proof-card.story blockquote{font-size:15px}
 .proof-card.verdict blockquote{font-size:14px}
-.proof-card .pq-attr{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,.3);margin-top:10px;text-transform:uppercase;letter-spacing:.06em;font-style:normal}
+.proof-card .pq-attr{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,.55);margin-top:10px;text-transform:uppercase;letter-spacing:.06em;font-style:normal}
 
 /* ═══ PRICING ═══ */
 .pricing{max-width:1120px;margin:0 auto;padding:64px 40px;text-align:center}
@@ -648,7 +647,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 <section class="hero">
   <div class="hero-text">
     <h1>Fixed asset depreciation that actually <span class="ties">ties.</span></h1>
-    <p class="hero-sub">Bricks is depreciation software for accountants who want changes and closes to be painless. Book, Tax, State, and AMT across multiple entities with audit-ready reporting.</p>
+    <p class="hero-sub">Your auditor shouldn't be the only person who knows what your assets are worth. Pull the NBV as of any date. Close the month in minutes. In the time it takes to open a spreadsheet.</p>
     <a href="#" data-track-cta="cta_click_hero" onclick="openModal(event)" class="cta">Book a walkthrough →</a>
     <div class="hero-cta-detail">30 minutes. We can load your actual asset data and show you your numbers live.</div>
   </div>
@@ -1097,7 +1096,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
   <div class="moment reveal" style="display:block;padding:52px 0">
     <div style="max-width:600px;margin-bottom:48px">
       <h3 style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;line-height:1.2;margin-bottom:12px">Close the books.</h3>
-      <p style="font-size:14px;line-height:1.65;color:var(--mid)">Closing the books or pulling accurate reports shouldn't take all day. Journal entries and depreciation reports are ready when you need them.</p>
+      <p style="font-size:14px;line-height:1.65;color:var(--mid)">You've typed this journal entry before. Entity by entity, account by account, checking the math twice. With Bricks, two clicks.</p>
     </div>
     <div class="moment-stage m3-race" id="m3-stage">
       <div class="m3-header-row">
@@ -1264,8 +1263,10 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 
 <!-- ═══ S5: PRICING ═══ -->
 <section class="pricing reveal">
+  <div style="margin-bottom:8px"><span style="font-family:'Source Serif 4',serif;font-size:clamp(28px,4vw,48px);color:var(--light);text-decoration:line-through;font-weight:400">$7,200</span></div>
   <div class="price-num">$600</div>
   <div class="price-unit">per user / year</div>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mid);margin:20px 0 6px;line-height:1.8">Every method. Every book. Every report. Unlimited entities.</p>
   <p class="price-cap">Up to 5,000 assets.</p>
   <p class="price-over">More than that? <a href="#" onclick="openModal(event)">Let's talk.</a></p>
 </section>
@@ -1277,7 +1278,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
   <div class="switching-inner reveal">
     <h2>You're live before your next monthly close.</h2>
     <div class="sw-step"><strong>Send us your file.</strong><p>Spreadsheet, Bloomberg Tax export, Sage file, or any CSV. No reformatting needed.</p></div>
-    <div class="sw-step"><strong>We map and verify.</strong><p>We import your assets, match your fields, and verify every calculation against what you've already reported. Nothing gets recalculated retroactively.</p></div>
+    <div class="sw-step"><strong>We map and verify.</strong><p>We import your assets, match your fields, and verify every calculation against what you've already reported. Your beginning balances carry over, locked and immutable. We calculate forward from there.</p></div>
     <div class="sw-step"><strong>You're running.</strong><p>Review your numbers, run your first reports, close the month.</p></div>
     <div class="guarantee">You don't pay until you're live.</div>
   </div>
@@ -1298,31 +1299,31 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 <section class="faq">
   <div class="faq-title">FAQ</div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I bring my existing data from spreadsheets or another system?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Can I bring my existing data from spreadsheets or another system?</div>
     <div class="faq-a">Yes. Send us your spreadsheet, Bloomberg Tax export, Sage file, or any CSV. We import your assets, match your fields, and verify every number against what you've already reported. Your historical data comes with you — nothing starts from scratch.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Will my auditor accept reports from Bricks?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Will my auditor accept reports from Bricks?</div>
     <div class="faq-a">Yes. Every report exports to PDF, Excel, and CSV in formats auditors expect — depreciation schedules, roll forwards, asset registers, journal entries. Our customers' auditors have reviewed and accepted these reports without issue.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can it handle multiple entities with different ownership structures?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Can it handle multiple entities with different ownership structures?</div>
     <div class="faq-a">Yes. We support multi-entity reporting with separate books per entity, TIC (tenancy-in-common) percentage allocation, and consolidated views across all entities. One of our customers manages 9 entities with shared ownership structures in a single account.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it integrate with my accounting software?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Does it integrate with my accounting software?</div>
     <div class="faq-a">Today: clean CSV, Excel, and PDF exports that match your GL structure. Direct integrations with QuickBooks and Sage Intacct are on the roadmap.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does Bricks generate IRS tax forms (4562, 4797)?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Does Bricks generate IRS tax forms (4562, 4797)?</div>
     <div class="faq-a">No. Your CPA generates the forms. We give them the numbers — depreciation schedules, gain/loss on disposal, Section 179 detail — in the format they need.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What depreciation methods do you support?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">What depreciation methods do you support?</div>
     <div class="faq-a">SL/FM, MACRS 200DB and 150DB (half-year, mid-quarter, mid-month conventions), Section 179, bonus depreciation, and Canadian CCA. If you have a method we don't handle yet, tell us — we've built every method a customer has asked for.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is my data secure?</div>
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Is my data secure?</div>
     <div class="faq-a">Bricks runs on enterprise Postgres with row-level security, encrypted at rest and in transit. Your data is isolated by organization — no other customer can see it.</div>
   </div>
 </section>
@@ -1332,7 +1333,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 
 <footer>
   <span>© 2026 Bricks. All rights reserved.</span>
-  <span>Fixed asset depreciation software</span>
+  <span><a href="https://withbricks.com/privacy" style="color:var(--light);text-decoration:none">Privacy</a> · Fixed asset depreciation software</span>
 </footer>
 
 <!-- BOOKING MODAL -->
