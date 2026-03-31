@@ -1262,13 +1262,13 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
         <div class="pq-attr">Finance Director, Medical Practice</div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:32px"><a href="#" data-track-cta="cta_click_mid2" onclick="openModal(event)" class="cta" style="background:#fff;color:var(--ink);border:1px solid rgba(255,255,255,.3)">Book a walkthrough →</a></div>
+    <div style="text-align:center;margin-top:32px"><a href="#" data-track-cta="cta_click_mid2" onclick="openModal(event)" class="cta" style="background:var(--accent);color:#fff">Book a walkthrough →</a></div>
   </div>
 </section>
 
 <!-- ═══ S5: PRICING ═══ -->
 <section class="pricing reveal">
-  <div style="margin-bottom:8px"><span style="font-family:'Source Serif 4',serif;font-size:clamp(28px,4vw,48px);color:var(--light);text-decoration:line-through;font-weight:400">$7,200</span></div>
+  <div style="margin-bottom:8px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Typical legacy software</div><span style="font-family:'Source Serif 4',serif;font-size:clamp(28px,4vw,48px);color:var(--light);text-decoration:line-through;font-weight:400">$7,200</span></div>
   <div class="price-num">$600</div>
   <div class="price-unit">per user / year</div>
   <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mid);margin:20px 0 6px;line-height:1.8">Every method. Every book. Every report. Unlimited entities.</p>
@@ -1280,7 +1280,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 
 <!-- ═══ S6: SWITCHING ═══ -->
 <section class="switching">
-  <div style="max-width:1120px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center" class="switching-grid">
+  <div class="switching-grid" style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
     <div class="switching-inner reveal">
       <h2>You're live before your next monthly close.</h2>
       <div class="sw-step"><strong>Send us your file.</strong><p>Spreadsheet, Bloomberg Tax export, Sage file, or any CSV. No reformatting needed.</p></div>
@@ -1289,11 +1289,11 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
       <div class="guarantee">You don't pay until you're live.</div>
     </div>
     <div class="reveal" style="display:flex;justify-content:center">
-      <div id="switchDropZone" style="width:100%;max-width:340px;border:2px dashed var(--rule-dark);border-radius:12px;padding:48px 32px;text-align:center;cursor:pointer;transition:all 0.2s ease" onclick="openModal(event)">
-        <div style="font-size:32px;color:var(--light);margin-bottom:12px">&#8593;</div>
-        <div style="font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">Drop your spreadsheet here</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--light);margin-bottom:16px">.csv &nbsp; .xlsx &nbsp; .xls &nbsp; .pdf</div>
-        <div style="font-size:14px;color:var(--mid)">Or <a href="#" onclick="openModal(event)" style="color:var(--accent);text-decoration:none;font-weight:500">book a walkthrough</a> and we'll handle it.</div>
+      <div id="switchDropZone" style="width:100%;max-width:340px;border:2px dashed var(--rule-dark);border-radius:12px;padding:48px 32px;text-align:center;transition:all 0.2s ease">
+        <div style="font-size:32px;color:var(--light);margin-bottom:12px">&#9993;</div>
+        <div style="font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">Ready to switch?</div>
+        <div style="font-size:14px;color:var(--mid);line-height:1.6;margin-bottom:16px">Email your spreadsheet to<br><a href="mailto:sam.anderson@withbricks.com" style="color:var(--accent);text-decoration:none;font-weight:500">sam.anderson@withbricks.com</a></div>
+        <a href="#" onclick="openModal(event)" class="cta" style="font-size:14px;padding:12px 24px">Book a walkthrough →</a>
       </div>
     </div>
   </div>
@@ -1341,6 +1341,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
     <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Is my data secure?</div>
     <div class="faq-a">Bricks runs on enterprise Postgres with row-level security, encrypted at rest and in transit. Your data is isolated by organization — no other customer can see it.</div>
   </div>
+  <div style="text-align:center;margin-top:28px"><a href="#" data-track-cta="cta_click_postfaq" onclick="openModal(event)" class="cta">Send us your spreadsheet →</a></div>
 </section>
 
 <!-- Social proof line -->
