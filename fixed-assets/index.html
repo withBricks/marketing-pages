@@ -1429,11 +1429,8 @@ window.addEventListener('message', function(e) {
   // HubSpot sends { meetingBookSucceeded: true } on successful booking
   if (data.meetingBookSucceeded || (data.meetingPayload && data.meetingPayload.bookSucceeded)) {
     if (typeof gtag === 'function') {
-      // GA4 event for our own tracking
-      gtag('event', 'BOOK_APPOINTMENT', { page: window.location.pathname });
-      // TODO: Sam — fill in your Google Ads conversion ID and label from the
-      // Google Ads UI (Conversions → BOOK_APPOINTMENT → Tag setup → Use gtag)
-      // gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXXX/XXXXXXXXXXXXXXXXXXXX' });
+      // GA4 event — must match the GA4 event name linked to Google Ads conversion
+      gtag('event', 'conversion_event_book_appointment', { page: window.location.pathname });
     }
   }
 });
