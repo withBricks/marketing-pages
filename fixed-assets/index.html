@@ -1418,6 +1418,26 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
 
+// ═══ HUBSPOT MEETING BOOKED → GOOGLE ADS CONVERSION ═══
+// HubSpot Meetings iframe sends a postMessage when a booking completes.
+// We listen for it and fire a gtag event so Google Ads can track real conversions.
+window.addEventListener('message', function(e) {
+  // Only accept messages from HubSpot
+  if (!e.origin || e.origin.indexOf('hubspot.com') === -1) return;
+  var data = e.data;
+  if (!data) return;
+  // HubSpot sends { meetingBookSucceeded: true } on successful booking
+  if (data.meetingBookSucceeded || (data.meetingPayload && data.meetingPayload.bookSucceeded)) {
+    if (typeof gtag === 'function') {
+      // GA4 event for our own tracking
+      gtag('event', 'BOOK_APPOINTMENT', { page: window.location.pathname });
+      // TODO: Sam — fill in your Google Ads conversion ID and label from the
+      // Google Ads UI (Conversions → BOOK_APPOINTMENT → Tag setup → Use gtag)
+      // gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXXX/XXXXXXXXXXXXXXXXXXXX' });
+    }
+  }
+});
+
 // ═══ INTERACTIVE HERO MOCK ═══
 var mockUrls = {
   dashboard: 'app.withbricks.com/org/sunrise/dashboard',

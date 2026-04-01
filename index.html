@@ -2,11 +2,2621 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0;url=/fixed-assets">
-<title>Redirecting...</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixed Asset Depreciation Software | Bricks</title>
+<meta name="description" content="Depreciation software that actually ties to your GL. Book, Tax, AMT, State. MACRS, Section 179, Bonus. Multi-entity. Audit-ready reports. $600/year.">
 <link rel="canonical" href="https://go.withbricks.com/fixed-assets" />
+<link rel="icon" type="image/svg+xml" href="/fixed-assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/fixed-assets/favicon-32.png">
+<link rel="apple-touch-icon" href="/fixed-assets/apple-touch-icon.png">
+<!-- OpenGraph -->
+<meta property="og:title" content="Bricks — Fixed Asset Depreciation Software">
+<meta property="og:description" content="Depreciation software that actually ties to your GL. Book, Tax, AMT, State. MACRS, Section 179, Bonus. Multi-entity. Audit-ready reports. $600/year.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://go.withbricks.com/fixed-assets">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2S3K66DR2G"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2S3K66DR2G', { send_page_view: true });
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "w19096t4kk");
+</script>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- FAQ Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I bring my existing data from spreadsheets or another system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Send us your spreadsheet, Bloomberg Tax export, Sage file, or any CSV. We import your assets, match your fields, and verify every number against what you've already reported."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will my auditor accept reports from Bricks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every report exports to PDF, Excel, and CSV in formats auditors expect. Our customers' auditors have reviewed and accepted these reports without issue."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can it handle multiple entities with different ownership structures?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We support multi-entity reporting with separate books per entity, TIC percentage allocation, and consolidated views across all entities."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it integrate with my accounting software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Today: clean CSV, Excel, and PDF exports that match your GL structure. Direct integrations with QuickBooks and Sage Intacct are on the roadmap."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What depreciation methods do you support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SL/FM, MACRS 200DB and 150DB, Section 179, bonus depreciation, and Canadian CCA. If you have a method we don't handle yet, tell us — we've built every method a customer has asked for."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data secure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bricks runs on enterprise Postgres with row-level security, encrypted at rest and in transit. Your data is isolated by organization."
+      }
+    }
+  ]
+}
+</script>
+<style>
+:root{--ink:#323741;--paper:#f9f8f5;--white:#ffffff;--mid:#71717a;--light:#a1a1aa;--rule:#e4e3df;--rule-dark:#c8c7c3;--accent:#C8785F;--accent-hover:#B86A52;--accent-light:#faf0ec;--surface:#f3f2ef;--ref-blue:#4472C4;--ref-red:#C0504D;--ref-purple:#7030A0;--win-bg:#F3F3F3;--win-surface:#FFFFFF;--win-border:#E5E5E5;--win-title:#1B1B1B;--win-accent:#0078D4;--win-accent-light:#CCE4F7;--win-select:rgba(0,120,212,0.12);--win-select-border:rgba(0,120,212,0.4);--excel-green:#217346;--excel-green-light:#185C37;--excel-grid:#D4D4D4;--excel-header-bg:#E6E6E6;--excel-select:#B4D6A4}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Window frame */
+.window-frame{background:var(--paper);min-height:100vh;margin-bottom:32px;background-image:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.012'/%3E%3C/svg%3E")}
+.win-chrome{position:fixed;top:0;left:0;right:0;z-index:100;background:#f0f0f0;border-bottom:1px solid #ccc;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 8px}
+.win-chrome-left{display:flex;align-items:center;gap:8px}
+.win-chrome-logo{width:14px;height:16px;flex-shrink:0}
+.win-chrome-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid)}
+.win-chrome-right{display:flex;align-items:center;gap:0}
+.win-chrome-cta{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--accent);background:none;border:none;cursor:pointer;padding:4px 12px;border-radius:2px;transition:background 0.1s}
+.win-chrome-cta:hover{background:rgba(200,120,95,0.08)}
+.win-controls{display:flex;gap:0;margin-left:auto}
+.win-btn{width:46px;height:32px;display:flex;align-items:center;justify-content:center;background:none;border:none;color:#666;font-size:14px;cursor:default;font-family:'IBM Plex Mono',monospace;transition:background .1s}
+.win-btn:hover{background:#e0e0e0}
+.win-btn.close:hover{background:#e81123;color:#fff}
+
+/* Nav */
+nav{max-width:1120px;margin:0 auto;padding:24px 40px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase}
+.nav-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-link:hover{color:var(--ink)}
+
+/* Exhibit label */
+.exhibit-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--light);text-align:right;margin-bottom:6px}
+
+/* Buttons */
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:16px 32px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:none;border-radius:2px;cursor:pointer;text-decoration:none;transition:background .2s}
+.cta:hover{background:var(--accent-hover)}
+.cta-accent{background:var(--accent);color:#fff}
+.cta-accent:hover{background:var(--accent-hover)}
+
+.divider{max-width:1120px;margin:0 auto;padding:0 40px}
+.divider hr{border:none;border-top:1px solid var(--rule)}
+
+/* ═══ HERO ═══ */
+.hero{max-width:1120px;margin:0 auto;padding:72px 40px 80px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+.hero-badge{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:16px}
+.hero-text h1{font-family:'Source Serif 4',serif;font-size:clamp(34px,4.8vw,58px);font-weight:600;line-height:1.06;letter-spacing:-.025em;margin-bottom:18px}
+.hero-text h1 .ties{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:17px;line-height:1.65;color:var(--mid);max-width:460px;margin-bottom:28px}
+.hero-cta-detail{font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);margin-top:18px;line-height:1.5}
+/* ═══ INTERACTIVE MOCK ═══ */
+.mock-frame{background:var(--white);border-radius:8px;border:1px solid var(--rule);overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.07),0 2px 8px rgba(0,0,0,.03);transform:perspective(1200px) rotateY(-1.5deg) rotateX(1deg);transition:transform .4s ease}
+.mock-frame:hover{transform:perspective(1200px) rotateY(0) rotateX(0)}
+.mock-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--rule)}
+.mock-dot{width:8px;height:8px;border-radius:50%}
+.mock-dot:nth-child(1){background:rgba(255,80,80,0.5)}.mock-dot:nth-child(2){background:rgba(255,190,50,0.5)}.mock-dot:nth-child(3){background:rgba(80,200,80,0.5)}
+.mock-url{flex:1;margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--light);background:var(--surface);padding:4px 10px;border-radius:3px;transition:color 0.2s ease}
+.mock-app{display:grid;grid-template-columns:48px 1fr;min-height:340px}
+.mock-sidebar{background:var(--surface);border-right:1px solid var(--rule);padding:8px 0;display:flex;flex-direction:column;align-items:center}
+.mock-sb-brand{padding:8px 0 10px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--rule);margin-bottom:4px;width:100%}
+.mock-sb-brand span{display:none}
+.mock-sb-item{display:flex;align-items:center;justify-content:center;padding:10px 0;font-size:0;color:var(--light);cursor:pointer;transition:all 0.15s ease;border-radius:0;width:100%;position:relative}
+.mock-sb-item .mock-sb-icon{width:18px;height:18px;border-radius:4px}
+.mock-sb-item:hover::after{content:attr(data-label);position:absolute;left:100%;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;font-size:11px;font-family:'DM Sans',sans-serif;padding:4px 8px;border-radius:4px;white-space:nowrap;z-index:20;margin-left:6px}
+.mock-sb-item:hover{color:var(--mid);background:var(--surface)}
+.mock-sb-item.active{color:var(--ink);background:var(--surface)}
+.mock-sb-item.active .mock-sb-icon{background:rgba(200,120,95,0.1);border-radius:4px}
+.mock-main{padding:14px;background:var(--surface);height:340px;overflow:hidden}
+
+/* Mock view panels */
+.mock-view{display:none;animation:mockFadeIn 0.25s ease}
+.mock-view.active{display:block}
+@keyframes mockFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.mock-greeting{font-size:12px;color:var(--light)}
+.mock-title{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-0.015em}
+.mock-date{font-size:12px;color:var(--light);margin-top:2px;margin-bottom:16px}
+.mock-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.mock-kpi{background:var(--white);border:1px solid var(--rule);border-radius:6px;padding:8px;cursor:pointer;transition:all 0.15s ease}
+.mock-kpi:hover{background:var(--white);border-color:var(--rule-dark)}
+.mock-kpi-label{font-size:8px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--light);margin-bottom:4px}
+.mock-kpi-value{font-family:'Source Serif 4',serif;font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-0.02em}
+.mock-kpi-sub{font-size:11px;color:var(--light);margin-top:1px}
+.mock-charts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mock-chart{background:var(--white);border:1px solid var(--rule);border-radius:6px;padding:12px}
+.mock-chart-title{font-size:12px;font-weight:600;color:var(--mid);margin-bottom:12px;letter-spacing:-0.01em}
+.mock-bars{display:flex;align-items:flex-end;gap:4px;height:70px}
+.mock-bar{flex:1;background:var(--accent);border-radius:2px 2px 0 0;opacity:0.7;transition:opacity 0.1s ease;cursor:pointer}
+.mock-bar:hover{opacity:1}
+.mock-bar-labels{display:flex;gap:4px;margin-top:4px}
+.mock-bar-labels span{flex:1;text-align:center;font-size:7px;color:var(--light);font-family:'IBM Plex Mono',monospace}
+.mock-entities{display:flex;flex-direction:column;gap:6px}
+.mock-entity{display:flex;align-items:center;gap:6px;cursor:pointer;padding:2px 0;border-radius:3px;transition:background 0.1s ease}
+.mock-entity:hover{background:var(--surface)}
+.mock-entity-name{font-size:11px;color:var(--light);width:65px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock-entity-bars{flex:1;display:flex;gap:2px;height:11px}
+.mock-entity-cost{background:var(--accent);opacity:0.5;border-radius:2px}
+.mock-entity-nbv{background:var(--accent);opacity:0.25;border-radius:2px}
+
+/* Mock Assets view */
+.mock-table-header{display:grid;grid-template-columns:1.5fr 1fr 0.8fr 0.8fr 0.8fr;gap:4px;padding:6px 8px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--light);border-bottom:1px solid var(--rule);margin-bottom:2px}
+.mock-table-row{display:grid;grid-template-columns:1.5fr 1fr 0.8fr 0.8fr 0.8fr;gap:4px;padding:7px 8px;font-size:12px;color:var(--mid);border-radius:4px;cursor:pointer;transition:background 0.1s ease}
+.mock-table-row:hover{background:var(--white)}
+.mock-table-row .asset-name{color:var(--ink);font-weight:500}
+.mock-table-row .method{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--light)}
+
+/* Mock Reports view */
+.mock-report-bar{display:flex;gap:5px;margin-bottom:14px;flex-wrap:nowrap}
+.mock-report-select{font-size:8px;padding:4px 8px;background:var(--white);border:1px solid var(--rule);border-radius:4px;color:var(--mid);font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.15s ease}
+.mock-report-select:hover{background:var(--surface)}
+.mock-report-select.active-select{border-color:var(--accent);color:var(--ink)}
+.mock-generate-btn{font-size:9px;padding:5px 14px;background:var(--accent);color:#fff;border:none;border-radius:4px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background 0.15s ease}
+.mock-generate-btn:hover{background:var(--accent-hover)}
+.mock-report-preview{background:var(--white);border:1px solid var(--rule);border-radius:6px;padding:14px;margin-top:8px}
+.mock-report-title-bar{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:4px;font-family:'Source Serif 4',serif}
+.mock-report-subtitle{font-size:9px;color:var(--light);margin-bottom:12px}
+
+/* Mock JE view */
+.mock-je-period{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.mock-je-label{font-size:10px;color:var(--light)}
+.mock-je-badge{font-size:9px;padding:3px 8px;background:var(--accent-light);color:var(--accent);border-radius:3px;font-weight:500}
+.mock-je-row{display:grid;grid-template-columns:1.2fr 1.5fr 0.8fr 0.8fr;gap:4px;padding:6px 8px;font-size:9px;color:var(--mid);border-radius:3px;cursor:pointer;transition:background 0.1s ease}
+.mock-je-row:hover{background:var(--white)}
+.mock-je-row.header{font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--light);font-size:8px;border-bottom:1px solid var(--rule);margin-bottom:2px;cursor:default}
+.mock-je-row.header:hover{background:transparent}
+.mock-je-entity{color:var(--ink);font-weight:500}
+.mock-je-debit{color:var(--accent)}
+.mock-je-credit{color:var(--ref-blue)}
+
+/* Mock Import view */
+.mock-import-zone{border:2px dashed var(--rule-dark);border-radius:8px;padding:28px;text-align:center;margin-bottom:14px;cursor:pointer;transition:all 0.2s ease}
+.mock-import-zone:hover{border-color:var(--accent);background:var(--accent-light)}
+.mock-import-icon{font-size:24px;margin-bottom:6px;opacity:0.4}
+.mock-import-text{font-size:11px;color:var(--light)}
+.mock-import-text strong{color:var(--mid)}
+.mock-import-formats{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.mock-import-fmt{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 8px;background:var(--white);border-radius:3px;color:var(--light)}
+
+/* ═══ OUTCOMES ═══ */
+.outcomes{max-width:1120px;margin:0 auto;padding:32px 40px 32px}
+.outcomes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0 32px}
+.outcome{padding:0 0 0 0}
+.outcome-metric{font-family:'Source Serif 4',serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1;margin-bottom:3px}
+.outcome-desc{font-size:13px;color:var(--mid);line-height:1.4;font-family:'IBM Plex Mono',monospace}
+.fn-wrap{display:inline;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent);cursor:help;position:relative;vertical-align:super;line-height:0;margin-left:1px}
+.fn-pop{display:none;position:absolute;bottom:calc(100% + 10px);left:-20px;width:260px;background:var(--ink);color:var(--paper);font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.5;padding:14px;border-radius:3px;z-index:10;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.fn-pop::after{content:'';position:absolute;top:100%;left:28px;border:6px solid transparent;border-top-color:var(--ink)}
+.fn-wrap:hover .fn-pop{display:block}
+
+/* ═══ MOMENTS ═══ */
+.moments{max-width:1120px;margin:0 auto;padding:0 40px 60px}
+.moment{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:start;padding:52px 0;border-top:1px solid var(--rule)}
+.moment:last-of-type{border-bottom:1px solid var(--rule)}
+.moment-text h3{font-family:'Source Serif 4',serif;font-size:26px;font-weight:600;line-height:1.2;margin-bottom:14px}
+.moment-text p{font-size:16px;line-height:1.65;color:var(--mid)}
+.moment.rev{direction:rtl}.moment.rev>*{direction:ltr}
+.moment-quote{margin-top:20px;font-family:'Source Serif 4',serif;font-size:14px;font-style:italic;line-height:1.55;color:var(--mid);padding-left:16px;border-left:2px solid var(--accent)}
+.moment-quote-attr{display:block;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-style:normal;color:var(--light);text-transform:uppercase;letter-spacing:.06em}
+
+/* Before/after split */
+/* Moment 3: Monthly Close Race */
+.m3-race{position:relative;min-height:480px}
+.m3-header-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-bottom:16px;gap:16px}
+.m3-panel-label{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+.m3-label-old{color:var(--light);text-align:left;display:flex;align-items:center;gap:10px}
+.m3-label-bricks{color:var(--accent);text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:10px}
+.m3-timer{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:500;letter-spacing:-0.02em;transition:color 0.3s ease}
+.m3-timer.stopped{color:var(--accent)}
+.m3-timer.running-long{color:#C00000}
+.m3-panels{display:grid;grid-template-columns:1fr 1px 1fr;gap:0;min-height:420px}
+.m3-divider{background:var(--rule);width:1px}
+.m3-panel-left{padding-right:20px}
+.m3-panel-right{padding-left:20px}
+.m3-counter{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;text-align:right;margin-bottom:10px;letter-spacing:0.02em;min-height:16px}
+.m3-counter-left{color:var(--light);transition:color 0.3s ease}
+.m3-counter-left.hot{color:#C00000}
+.m3-counter-right{color:var(--accent)}
+.m3-excel{background:var(--win-surface);border-radius:8px;border:1px solid var(--win-border);box-shadow:0 2px 12px rgba(0,0,0,0.08);overflow:hidden;font-family:'Segoe UI',-apple-system,sans-serif;transition:opacity 0.6s ease}
+.m3-excel .excel-titlebar{height:28px}
+.m3-excel .excel-titlebar-text{font-size:11px}
+.m3-je-grid{border-collapse:collapse;width:100%;font-size:10px}
+.m3-je-grid th{background:var(--excel-header-bg);border:1px solid var(--excel-grid);padding:3px 6px;font-weight:400;font-size:9px;color:#666;text-align:center}
+.m3-je-grid th.col-head{text-align:left;font-weight:500;color:#444;min-width:70px}
+.m3-je-grid th.col-head-num{text-align:right;min-width:70px}
+.m3-je-grid th.row-num{min-width:24px;color:#999;font-size:9px;background:var(--excel-header-bg)}
+.m3-je-grid td{border:1px solid var(--excel-grid);padding:2px 6px;height:20px;font-family:'Calibri','Segoe UI',-apple-system,sans-serif;font-size:10px;color:#333;white-space:nowrap;position:relative}
+.m3-je-grid td.num{text-align:right}
+.m3-je-grid td.typing{outline:2px solid var(--excel-green);outline-offset:-1px;z-index:2}
+.m3-balance-bar{padding:6px 10px;font-family:'IBM Plex Mono',monospace;font-size:10px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--excel-grid);background:#FAFAFA;min-height:28px;transition:background 0.3s ease,color 0.3s ease}
+.m3-balance-bar.error{background:#FEF2F2;color:#C00000}
+.m3-balance-bar.partial{background:#FFFBEB;color:#92400E}
+.m3-balance-bar.balanced{background:#FDF5F0;color:var(--accent)}
+.m3-bricks-panel{background:var(--win-surface);border-radius:8px;border:1px solid rgba(50,55,65,0.1);box-shadow:0 2px 12px rgba(0,0,0,0.04);overflow:hidden}
+.m3-bricks-header{padding:16px 18px 14px;border-bottom:1px solid rgba(50,55,65,0.06)}
+.m3-bricks-title{font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:12px}
+.m3-bricks-controls{display:flex;align-items:center;gap:8px}
+.m3-period-select{font-family:'DM Sans',sans-serif;font-size:11px;padding:6px 24px 6px 10px;border:1px solid rgba(50,55,65,0.15);border-radius:4px;background:#FAFAF8 url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237A7F8A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 8px center;color:var(--ink);cursor:pointer;transition:border-color 0.15s ease;appearance:none;min-width:110px;position:relative}
+.m3-period-select.clicked{border-color:var(--accent)}
+.m3-gen-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:6px 14px;background:var(--accent);color:white;border:none;border-radius:4px;cursor:pointer;transition:all 0.15s ease}
+.m3-gen-btn.pressed{transform:scale(0.96);background:var(--accent);filter:brightness(0.9)}
+.m3-export-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:6px 14px;background:transparent;color:var(--mid);border:1px solid rgba(50,55,65,0.15);border-radius:4px;cursor:pointer;transition:all 0.15s ease}
+.m3-export-btn.pressed{transform:scale(0.96);background:rgba(50,55,65,0.04)}
+.m3-bricks-table-area{padding:0 18px 14px;min-height:200px}
+.m3-bricks-empty{text-align:center;padding:48px 0;color:var(--light);font-size:12px}
+.m3-bricks-je-table{width:100%;border-collapse:collapse;font-size:11px;display:none}
+.m3-bricks-je-table.visible{display:table}
+.m3-bricks-je-table th{text-align:left;padding:6px 8px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--light);border-bottom:1px solid rgba(50,55,65,0.06)}
+.m3-bricks-je-table th.num-col{text-align:right}
+.m3-bricks-je-table td{padding:5px 8px;border-bottom:1px solid rgba(50,55,65,0.04);color:var(--mid)}
+.m3-bricks-je-table td:first-child{font-weight:500;color:var(--ink)}
+.m3-bricks-je-table td.num-col{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px}
+.m3-bricks-je-table td.debit{color:var(--ink)}
+.m3-bricks-je-table td.credit{color:var(--accent)}
+.m3-bricks-je-table tr.je-row{opacity:0;transform:translateY(4px);transition:opacity 0.2s ease,transform 0.2s ease}
+.m3-bricks-je-table tr.je-row.shown{opacity:1;transform:translateY(0)}
+.m3-bricks-balance{padding:8px 18px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--accent);border-top:1px solid rgba(50,55,65,0.06);opacity:0;transition:opacity 0.3s ease}
+.m3-bricks-balance.shown{opacity:1}
+.m3-done-label{text-align:center;margin-top:12px;font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:var(--accent);opacity:0;transition:opacity 0.4s ease}
+.m3-done-label.shown{opacity:1}
+.m3-download-toast{position:absolute;top:-30px;right:0;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);background:#FDF5F0;border:1px solid rgba(200,120,95,0.2);padding:4px 10px;border-radius:4px;opacity:0;transition:opacity 0.2s ease,transform 0.2s ease;transform:translateY(4px);white-space:nowrap}
+.m3-download-toast.shown{opacity:1;transform:translateY(0)}
+.m3-bricks-cursor{position:absolute;width:14px;height:20px;z-index:100;opacity:0;pointer-events:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3))}
+
+/* ═══ MOMENT 1 ANIMATED ═══ */
+.moment-stage{position:relative;min-height:420px;overflow:hidden}
+.replay-btn{position:absolute;bottom:8px;right:8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--light);background:rgba(255,255,255,0.8);border:1px solid rgba(50,55,65,0.1);border-radius:4px;padding:4px 10px;cursor:pointer;opacity:0;transition:opacity 0.3s ease;z-index:50;backdrop-filter:blur(4px)}
+.replay-btn.visible{opacity:1}
+.replay-btn:hover{color:var(--mid);border-color:rgba(50,55,65,0.2)}
+
+/* Windows Explorer chrome */
+.win-explorer{background:var(--win-bg);border-radius:8px;border:1px solid var(--win-border);box-shadow:0 2px 12px rgba(0,0,0,0.08),0 0 0 0.5px rgba(0,0,0,0.06);overflow:hidden;font-family:'Segoe UI',-apple-system,sans-serif;width:100%;max-width:680px;transition:opacity 0.5s ease,transform 0.5s ease}
+.win-titlebar{display:flex;align-items:center;justify-content:space-between;height:32px;padding:0 4px 0 12px;background:var(--win-bg);user-select:none}
+.win-titlebar-text{font-size:12px;color:var(--win-title);font-weight:400;flex:1}
+.win-controls-m1{display:flex;height:32px}
+.win-ctrl{width:46px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;cursor:default}
+.win-ctrl svg{width:10px;height:10px;color:var(--win-title)}
+.win-ctrl-close:hover{background:#C42B1C}
+.win-ctrl-close:hover svg{color:white}
+.win-toolbar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--win-bg);border-bottom:1px solid var(--win-border)}
+.win-nav-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;border-radius:4px;cursor:default;color:#666}
+.win-breadcrumb{flex:1;display:flex;align-items:center;gap:2px;background:var(--win-surface);border:1px solid var(--win-border);border-radius:4px;padding:4px 10px;font-size:12px;color:#444}
+.win-breadcrumb .sep{color:#999;margin:0 2px}
+.win-file-list{background:var(--win-surface);min-height:220px;max-height:280px;overflow-y:hidden;padding:4px}
+.win-file-header{display:grid;grid-template-columns:1fr 120px 70px;padding:6px 12px;font-size:11px;color:#666;border-bottom:1px solid var(--win-border);font-weight:400}
+.win-file-row{display:grid;grid-template-columns:1fr 120px 70px;padding:4px 12px;font-size:12px;color:var(--win-title);border-radius:4px;align-items:center;cursor:default;transition:background 0.1s ease;position:relative}
+.win-file-row.selected{background:var(--win-select);outline:1px solid var(--win-select-border)}
+.win-file-name{display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win-file-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.excel-icon{width:16px;height:16px;background:var(--excel-green);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:'Segoe UI',-apple-system,sans-serif;font-size:9px;font-weight:700;color:white;letter-spacing:-0.5px}
+.win-file-date{font-size:11px;color:#666}
+.win-file-size{font-size:11px;color:#666;text-align:right}
+.win-file-row .temp-indicator{font-size:10px;color:#999}
+.win-statusbar{display:flex;align-items:center;padding:4px 12px;background:var(--win-bg);border-top:1px solid var(--win-border);font-size:11px;color:#666}
+.win-file-row.hidden-row{display:none}
+.win-file-row.drop-in{display:grid;animation:fileDrop 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards}
+@keyframes fileDrop{0%{opacity:0;transform:translateY(-12px)}60%{opacity:1;transform:translateY(2px)}100%{opacity:1;transform:translateY(0)}}
+
+/* Selection rectangle */
+.selection-rect{position:absolute;border:1px solid var(--win-accent);background:rgba(0,120,212,0.08);border-radius:2px;pointer-events:none;opacity:0;z-index:10}
+
+/* Cursor */
+.fake-cursor{position:absolute;width:14px;height:20px;z-index:300;opacity:0;pointer-events:none;transition:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3))}
+
+/* Ghost drag stack */
+.drag-ghost{position:absolute;background:rgba(255,255,255,0.85);border:1px solid var(--win-select-border);border-radius:6px;padding:8px 14px;font-family:'Segoe UI',-apple-system,sans-serif;font-size:11px;color:var(--win-title);box-shadow:0 4px 16px rgba(0,0,0,0.12);opacity:0;z-index:90;pointer-events:none;white-space:nowrap;backdrop-filter:blur(8px)}
+.drag-ghost .count-badge{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--win-accent);color:white;border-radius:50%;font-size:10px;font-weight:600;margin-right:6px}
+
+/* Windows dialog */
+.win-dialog-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;backdrop-filter:blur(2px);transition:opacity 0.25s ease}
+.win-dialog-overlay.visible{opacity:1;pointer-events:auto}
+.win-dialog{background:var(--win-surface);border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.18);padding:24px;max-width:420px;width:90%;font-family:'Segoe UI',-apple-system,sans-serif;transform:scale(0.95);transition:transform 0.25s ease}
+.win-dialog-overlay.visible .win-dialog{transform:scale(1)}
+.win-dialog-title{font-size:14px;font-weight:600;color:var(--win-title);margin-bottom:8px}
+.win-dialog-text{font-size:13px;color:#555;line-height:1.5;margin-bottom:20px}
+.win-dialog-buttons{display:flex;justify-content:flex-end;gap:8px}
+.win-dialog-btn{font-family:'Segoe UI',-apple-system,sans-serif;font-size:13px;padding:6px 20px;border-radius:4px;border:1px solid var(--win-border);background:var(--win-surface);color:var(--win-title);cursor:pointer;transition:background 0.1s ease}
+.win-dialog-btn:hover{background:#F5F5F5}
+.win-dialog-btn.primary{background:var(--win-accent);color:white;border-color:var(--win-accent)}
+.win-dialog-btn.primary:hover{background:#106EBE}
+.win-dialog-btn.primary.clicked{background:#005A9E;transform:scale(0.97)}
+
+/* Bricks after state */
+.bricks-after{opacity:0;transform:translateY(12px);transition:opacity 0.6s ease,transform 0.6s ease;width:100%;position:relative;z-index:10}
+.bricks-after.visible{opacity:1;transform:translateY(0)}
+.bricks-register{background:#fff;border-radius:8px;border:1px solid rgba(50,55,65,0.1);box-shadow:0 2px 12px rgba(0,0,0,0.04);overflow:hidden}
+.bricks-reg-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(50,55,65,0.06)}
+.bricks-reg-title{font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:var(--ink)}
+.bricks-reg-count{font-size:12px;color:var(--light)}
+.bricks-reg-table{width:100%;border-collapse:collapse;font-size:12px}
+.bricks-reg-table thead th{padding:8px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;color:var(--light);border-bottom:1px solid rgba(50,55,65,0.06);background:#FAFAF8}
+.bricks-reg-table tbody td{padding:10px 16px;border-bottom:1px solid rgba(50,55,65,0.04);color:var(--mid)}
+.bricks-reg-table tbody td:first-child{font-weight:500;color:var(--ink)}
+.bricks-reg-table .method{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--light)}
+.bricks-reg-table .money{font-family:'IBM Plex Mono',monospace;font-size:11px;text-align:right}
+
+/* Bricks drop target */
+.bricks-drop-target{display:flex;flex-direction:column;align-items:center;gap:20px;padding-top:40px}
+.bricks-app-icon{width:72px;height:72px;border-radius:16px;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.15);transition:transform 0.3s ease,box-shadow 0.3s ease;cursor:default;position:relative}
+.bricks-app-icon.hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+.bricks-app-icon.opening{animation:iconOpening 0.6s ease-in-out}
+@keyframes iconOpening{0%{transform:scale(1.1)}25%{transform:scale(1.15);box-shadow:0 8px 32px rgba(200,120,95,0.3)}50%{transform:scale(1.08)}75%{transform:scale(1.12);box-shadow:0 8px 32px rgba(200,120,95,0.25)}100%{transform:scale(1.1);box-shadow:0 8px 32px rgba(200,120,95,0.15)}}
+.bricks-app-icon::after{content:'';position:absolute;inset:-6px;border-radius:20px;border:2px solid transparent;transition:border-color 0.3s ease,transform 0.3s ease,opacity 0.3s ease;opacity:0;pointer-events:none}
+.bricks-app-icon.opening::after{border-color:rgba(200,120,95,0.3);opacity:1;animation:ringPulse 0.8s ease-out}
+@keyframes ringPulse{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.3);opacity:0}}
+.bricks-app-icon-label{font-family:'Segoe UI',-apple-system,sans-serif;font-size:11px;color:var(--light);text-align:center}
+
+/* Import zone */
+.bricks-import-zone{width:100%;max-width:380px;border:2px dashed var(--accent);border-radius:12px;padding:28px 24px;text-align:center;background:rgba(200,120,95,0.04);opacity:0;transform:scale(0.95) translateY(-10px);transition:opacity 0.4s ease,transform 0.4s ease}
+.bricks-import-zone.open{opacity:1;transform:scale(1) translateY(0)}
+.bricks-import-zone-icon{font-size:28px;margin-bottom:8px;color:var(--accent)}
+.bricks-import-zone-text{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mid);margin-bottom:4px}
+.bricks-import-zone-hint{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--light)}
+.bricks-import-zone .importing-bar{margin-top:16px;height:4px;background:rgba(200,120,95,0.15);border-radius:2px;overflow:hidden;opacity:0;transition:opacity 0.3s ease}
+.bricks-import-zone .importing-bar.active{opacity:1}
+.bricks-import-zone .importing-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width 0.7s cubic-bezier(0.25,0.46,0.45,0.94)}
+.bricks-import-zone .importing-fill.running{width:100%}
+.bricks-import-zone .importing-status{margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--light);opacity:0;transition:opacity 0.3s ease}
+.bricks-import-zone .importing-status.active{opacity:1}
+
+/* Moment 1 layout */
+.m1-stage{display:flex;gap:32px;align-items:flex-start;position:relative;min-height:460px}
+
+/* Shared dots (toolbar) */
+.dot{width:7px;height:7px;border-radius:50%}.dot-r{background:#ee6a5f}.dot-y{background:#f5bd4f}.dot-g{background:#61c454}
+
+
+/* ═══ MOMENT 2: EXCEL CHROME ═══ */
+.excel-window{background:var(--win-surface);border-radius:8px;border:1px solid var(--win-border);box-shadow:0 2px 12px rgba(0,0,0,0.08),0 0 0 0.5px rgba(0,0,0,0.06);overflow:hidden;font-family:'Segoe UI',-apple-system,sans-serif;width:100%;transition:opacity 0.5s ease,transform 0.5s ease}
+.excel-titlebar{display:flex;align-items:center;height:30px;padding:0 4px 0 8px;background:var(--excel-green);color:white}
+.excel-titlebar-text{flex:1;font-size:12px;font-weight:400;text-align:center;opacity:0.9}
+.excel-titlebar .win-controls-m1{height:30px}
+.excel-titlebar .win-ctrl svg{color:white}
+.excel-titlebar .win-ctrl:hover{background:rgba(255,255,255,0.1)}
+.excel-titlebar .win-ctrl-close:hover{background:#C42B1C}
+.excel-ribbon{display:flex;gap:16px;padding:4px 12px;background:#F3F3F3;border-bottom:1px solid #E0E0E0;font-size:11px;color:#444}
+.excel-ribbon span{padding:3px 6px;border-radius:3px}
+.excel-ribbon span:first-child{background:rgba(0,0,0,0.04);font-weight:500}
+.excel-formula-bar{display:flex;align-items:center;padding:2px 8px;border-bottom:1px solid #E0E0E0;background:white;height:26px;gap:8px}
+.excel-cell-ref{font-size:11px;color:#333;min-width:40px;padding:2px 6px;border-right:1px solid #E0E0E0;font-family:'Segoe UI',-apple-system,sans-serif}
+.excel-fx{font-size:11px;font-style:italic;color:#999;margin-right:4px}
+.excel-formula-text{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#333;flex:1;white-space:nowrap;overflow:hidden;min-height:16px}
+.excel-formula-text .ref-blue{color:#0070C0}
+.excel-formula-text .ref-red{color:#C00000}
+.excel-formula-text .ref-purple{color:#7030A0}
+.excel-formula-text .ref-green{color:#217346}
+.excel-formula-text .ref-orange{color:#BF8F00}
+.excel-grid td.cell-hl-blue{outline:2px solid #0070C0;outline-offset:-1px;z-index:2}
+.excel-grid td.cell-hl-red{outline:2px solid #C00000;outline-offset:-1px;z-index:2}
+.excel-grid td.cell-hl-purple{outline:2px solid #7030A0;outline-offset:-1px;z-index:2}
+.excel-grid td.cell-hl-green{outline:2px solid #217346;outline-offset:-1px;z-index:2}
+.excel-grid td.cell-hl-orange{outline:2px solid #BF8F00;outline-offset:-1px;z-index:2}
+.excel-sheet{overflow-x:auto;background:white;scroll-behavior:smooth}
+.excel-grid{border-collapse:collapse;font-size:11px;min-width:100%}
+.excel-grid th{background:var(--excel-header-bg);border:1px solid var(--excel-grid);padding:3px 6px;font-weight:400;color:#333;text-align:center;min-width:28px;font-size:10px;position:sticky;top:0}
+.excel-grid th.row-num{min-width:30px;background:var(--excel-header-bg);color:#666;text-align:center}
+.excel-grid td{border:1px solid var(--excel-grid);padding:3px 8px;min-width:80px;height:22px;font-family:'Calibri','Segoe UI',-apple-system,sans-serif;font-size:11px;color:#333;white-space:nowrap;position:relative}
+.excel-grid td.number{text-align:right;font-family:'Calibri','Segoe UI',-apple-system,sans-serif}
+.excel-grid td.label{font-weight:500;background:#F8F8F8}
+.excel-grid td.active-cell{outline:2px solid var(--excel-green);outline-offset:-1px;z-index:2}
+.excel-grid td.new-col{opacity:0;transition:opacity 0.3s ease;min-width:90px}
+.excel-grid td.new-col.shown{opacity:1}
+.excel-grid td.new-header{font-size:10px;color:#888;font-style:italic;background:#FAFAFA}
+.excel-statusbar{display:flex;align-items:center;justify-content:space-between;padding:3px 12px;background:var(--excel-green);font-size:10px;color:rgba(255,255,255,0.7)}
+.excel-annotation{text-align:center;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--mid);font-style:italic;opacity:0;transition:opacity 0.5s ease;background:#FAFAFA;border-top:1px solid #E0E0E0}
+.excel-annotation.shown{opacity:1}
+
+/* Bricks answer card */
+.bricks-answer{max-width:380px;width:100%;opacity:0;transform:translateX(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.bricks-answer.visible{opacity:1;transform:translateX(0)}
+.bricks-answer-card{background:white;border-radius:8px;border:1px solid rgba(50,55,65,0.1);box-shadow:0 2px 12px rgba(0,0,0,0.04);padding:28px}
+.bricks-answer-asset{font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:16px}
+.bricks-date-picker{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid rgba(50,55,65,0.15);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);margin-bottom:20px;background:#FAFAF8}
+.bricks-date-picker svg{color:var(--light)}
+.bricks-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.bricks-kpi{padding:14px;background:#FAFAF8;border-radius:6px}
+.bricks-kpi-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--light);margin-bottom:4px}
+.bricks-kpi-value{font-family:'Source Serif 4',serif;font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.02em}
+.bricks-answer-note{font-size:12px;color:var(--light);text-align:center}
+
+/* Typing cursor */
+.type-cursor{display:inline-block;width:1px;height:13px;background:#333;animation:cursor-blink 0.8s step-end infinite;vertical-align:middle;margin-left:1px}
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Moment 2 layout */
+.m2-stage{display:flex;gap:32px;align-items:flex-start;position:relative;min-height:400px}
+
+
+/* ═══ TABLE STAKES ═══ */
+.table-stakes{max-width:1120px;margin:0 auto;padding:44px 40px;text-align:center}
+.table-stakes h3{font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;margin-bottom:18px}
+.stakes-list{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--mid);line-height:2.2;max-width:740px;margin:0 auto}
+.sep{color:var(--rule-dark);margin:0 3px}
+.tick{color:var(--accent);font-size:10px;margin-right:2px}
+
+/* ═══ PROOF ═══ */
+.proof{padding:64px 0;background:var(--ink);color:var(--paper)}
+.proof-inner{max-width:1120px;margin:0 auto;padding:0 40px}
+.proof-headline{font-family:'Source Serif 4',serif;font-size:clamp(28px,3.5vw,38px);font-weight:600;color:rgba(255,255,255,.9);line-height:1.2;letter-spacing:-.02em;margin-bottom:40px;font-style:italic}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.proof-card{padding:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px}
+.proof-card blockquote{font-family:'Source Serif 4',serif;font-style:italic;line-height:1.6;color:rgba(255,255,255,.8);margin:0}
+.proof-card.story blockquote{font-size:16px}
+.proof-card.verdict blockquote{font-size:15px}
+.proof-card .pq-attr{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,.55);margin-top:10px;text-transform:uppercase;letter-spacing:.06em;font-style:normal}
+
+/* ═══ PRICING ═══ */
+.pricing{max-width:1120px;margin:0 auto;padding:64px 40px;text-align:center}
+.price-num{font-family:'Source Serif 4',serif;font-size:clamp(52px,8vw,88px);font-weight:700;line-height:1;margin-bottom:4px}
+.price-unit{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--mid);margin-bottom:20px}
+.price-cap{font-size:15px;color:var(--mid);margin-bottom:6px}
+.price-over{font-size:14px;color:var(--mid)}
+.price-over a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent)}
+.price-over a:hover{border-bottom-color:transparent}
+
+/* ═══ SWITCHING ═══ */
+.switching{max-width:1120px;margin:0 auto;padding:64px 40px}
+.switching-inner{max-width:560px}
+.switching h2{font-family:'Source Serif 4',serif;font-size:clamp(24px,3vw,34px);font-weight:600;line-height:1.15;margin-bottom:24px}
+.sw-step{margin-bottom:16px}
+.sw-step strong{font-size:16px;color:var(--ink)}
+.sw-step p{font-size:15px;color:var(--mid);line-height:1.6;margin-top:4px}
+.guarantee{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:var(--ink);margin-top:28px;padding-top:18px;border-top:2px solid var(--ink);display:inline-block}
+
+/* ═══ CTA ═══ */
+.final-cta{max-width:1120px;margin:0 auto;padding:64px 40px 80px;text-align:center}
+.final-cta h2{font-family:'Source Serif 4',serif;font-size:clamp(28px,4vw,46px);font-weight:600;line-height:1.1;margin-bottom:14px}
+.final-cta p{font-size:16px;line-height:1.6;color:var(--mid);max-width:480px;margin:0 auto 28px}
+
+/* ═══ FAQ ═══ */
+.faq{max-width:1120px;margin:0 auto;padding:0 40px 64px}
+.faq-title{font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;margin-bottom:24px}
+.faq-item{border-top:1px solid var(--rule)}
+.faq-item:last-child{border-bottom:1px solid var(--rule)}
+.faq-q{font-size:15px;font-weight:600;padding:20px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q::after{content:'+';font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--light);flex-shrink:0;transition:transform 0.2s ease}
+.faq-item.open .faq-q::after{content:'\2212';transform:rotate(0)}
+.faq-a{font-size:15px;color:var(--mid);line-height:1.6;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease;padding:0 0 0 0}
+.faq-item.open .faq-a{max-height:200px;padding:0 0 18px 0}
+
+/* Social proof line */
+.social-line{max-width:1120px;margin:0 auto;padding:24px 40px;text-align:center;font-size:13px;color:var(--mid)}
+
+/* Footer */
+footer{max-width:1120px;margin:0 auto;padding:20px 40px 48px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--light)}
+
+/* Status bar */
+.status-bar{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--rule);padding:6px 40px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mid);display:flex;justify-content:space-between;align-items:center;z-index:100}
+.sb-left{color:var(--light)}
+.sb-right{display:flex;gap:24px}
+.sb-label{color:var(--light)}
+
+/* Responsive */
+@media(max-width:900px){
+/* Hero */
+.hero{grid-template-columns:1fr;gap:32px}
+/* Interactive mock: hide sidebar, full-width app */
+.mock-frame{transform:none}
+.mock-app{grid-template-columns:1fr}.mock-sidebar{display:none}
+.mock-kpis{grid-template-columns:repeat(2,1fr)}
+.mock-charts{grid-template-columns:1fr}
+/* Moments: single column, no RTL */
+.moment{grid-template-columns:1fr;gap:24px}
+.moment.rev{direction:ltr}
+/* Moment 1: hide absolute-positioned animation elements */
+.fake-cursor,.selection-rect,.drag-ghost{display:none !important}
+.m1-stage{min-height:auto;flex-direction:column}
+/* Moment 2: stack Excel + Bricks answer */
+.m2-stage{flex-direction:column;min-height:auto}
+.excel-window{max-width:100%}
+.bricks-answer{max-width:100%}
+/* Moment 3 */
+.m3-race{min-height:auto}
+/* Switching section */
+.switching-grid{grid-template-columns:1fr !important}
+.m3-panels{grid-template-columns:1fr;gap:24px}
+.m3-divider{display:none}
+.m3-panel-left,.m3-panel-right{padding:0}
+.m3-header-row{grid-template-columns:1fr;gap:8px;text-align:center}
+.m3-label-old,.m3-label-bricks{text-align:center;justify-content:center}
+/* Outcomes */
+.outcomes-grid{grid-template-columns:repeat(2,1fr);gap:16px 32px}
+/* Window chrome + status bar: hide on mobile */
+.status-bar{display:none}
+.win-chrome{display:none}
+.window-frame{margin-bottom:0}
+}
+@media(max-width:600px){
+nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.final-cta,.faq,.divider,.social-line,footer{padding-left:20px;padding-right:20px}
+.outcomes-grid{grid-template-columns:1fr;gap:16px 0}
+.outcome{padding:0 0 14px 0;border-bottom:1px solid var(--rule)}
+.outcome:last-child{border-bottom:none}
+.proof-grid{grid-template-columns:1fr}
+.mock-charts{grid-template-columns:1fr}
+}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ MODAL ═══ */
+.modal-overlay {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--paper);
+  border-radius: 8px;
+  max-width: 700px; width: 100%;
+  padding: 32px 28px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none;
+  font-size: 1.25rem; color: var(--light);
+  cursor: pointer; padding: 4px 8px; line-height: 1;
+  font-family: 'IBM Plex Mono', monospace;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--ink); }
+.modal h3 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 22px; font-weight: 600;
+  margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.modal > p {
+  font-size: 14px; color: var(--mid);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+</style>
 </head>
 <body>
-<p>Redirecting to <a href="/fixed-assets">Bricks Assets</a>...</p>
+
+<!-- Windows chrome -->
+<div class="win-chrome" id="winChrome">
+  <div class="win-chrome-left">
+    <svg class="win-chrome-logo" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
+    <span class="win-chrome-title">Bricks Assets</span>
+  </div>
+  <div class="win-chrome-right">
+    <button class="win-chrome-cta" onclick="openModal(event)">See it in action →</button>
+    <button class="win-btn">─</button>
+    <button class="win-btn">☐</button>
+    <button class="win-btn close" onclick="dismissChrome()">✕</button>
+  </div>
+</div>
+
+<div class="window-frame" style="padding-top:32px;">
+
+<!-- Nav removed — chrome bar serves as nav -->
+
+<!-- ═══ S1: HERO ═══ -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Fixed asset depreciation that actually <span class="ties">ties.</span></h1>
+    <p class="hero-sub">Your auditor shouldn't be the only person who knows what your assets are worth. Pull the NBV as of any date or close the month in the time it takes to <em>open</em> a spreadsheet.</p>
+    <a href="#" data-track-cta="cta_click_hero" onclick="openModal(event)" class="cta">Book a walkthrough →</a>
+
+    <div class="hero-cta-detail">30 minutes. We load your actual data and show you your numbers live. Most customers are running within 2–4 weeks.</div>
+  </div>
+  <div>
+
+    <div class="mock-frame">
+      <div class="mock-app">
+        <div class="mock-sidebar">
+          <div class="mock-sb-brand">
+            <svg width="16" height="16" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
+            <span>Bricks Assets</span>
+          </div>
+          <div class="mock-sb-item active" data-view="dashboard" data-label="Dashboard" onclick="switchMock('dashboard')"><span class="mock-sb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span></div>
+          <div class="mock-sb-item" data-view="assets" data-label="Assets" onclick="switchMock('assets')"><span class="mock-sb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></span></div>
+          <div class="mock-sb-item" data-view="reports" data-label="Reports" onclick="switchMock('reports')"><span class="mock-sb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></span></div>
+          <div class="mock-sb-item" data-view="journal" data-label="Journal Entries" onclick="switchMock('journal')"><span class="mock-sb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></span></div>
+          <div class="mock-sb-item" data-view="import" data-label="Import" onclick="switchMock('import')"><span class="mock-sb-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span></div>
+        </div>
+        <div class="mock-main">
+          <!-- Dashboard View -->
+          <div class="mock-view active" id="mv-dashboard">
+            <div class="mock-greeting">Good morning, Susan</div>
+            <div class="mock-title">Sunrise Retirement Community</div>
+            <div class="mock-date">As of March 30, 2026</div>
+            <div class="mock-kpis">
+              <div class="mock-kpi"><div class="mock-kpi-label">Total Cost</div><div class="mock-kpi-value">$31.2M</div><div class="mock-kpi-sub">5 entities</div></div>
+              <div class="mock-kpi"><div class="mock-kpi-label">Book NBV</div><div class="mock-kpi-value">$22.0M</div><div class="mock-kpi-sub">257 assets</div></div>
+              <div class="mock-kpi"><div class="mock-kpi-label">YTD Depr.</div><div class="mock-kpi-value">$225K</div><div class="mock-kpi-sub">3 months</div></div>
+              <div class="mock-kpi"><div class="mock-kpi-label">Monthly</div><div class="mock-kpi-value">$75.6K</div><div class="mock-kpi-sub">March 2026</div></div>
+            </div>
+            <div class="mock-charts">
+              <div class="mock-chart">
+                <div class="mock-chart-title">Monthly Book Depreciation — 2026</div>
+                <div class="mock-bars"><div class="mock-bar" style="height:68%"></div><div class="mock-bar" style="height:68%"></div><div class="mock-bar" style="height:72%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div><div class="mock-bar" style="height:20%"></div></div>
+                <div class="mock-bar-labels"><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+              </div>
+              <div class="mock-chart">
+                <div class="mock-chart-title">Cost vs. NBV by Entity</div>
+                <div class="mock-entities">
+                  <div class="mock-entity"><span class="mock-entity-name">Indep. Living</span><div class="mock-entity-bars"><div class="mock-entity-cost" style="width:85%"></div><div class="mock-entity-nbv" style="width:60%"></div></div></div>
+                  <div class="mock-entity"><span class="mock-entity-name">Main Campus</span><div class="mock-entity-bars"><div class="mock-entity-cost" style="width:100%"></div><div class="mock-entity-nbv" style="width:75%"></div></div></div>
+                  <div class="mock-entity"><span class="mock-entity-name">Assisted Living</span><div class="mock-entity-bars"><div class="mock-entity-cost" style="width:70%"></div><div class="mock-entity-nbv" style="width:48%"></div></div></div>
+                  <div class="mock-entity"><span class="mock-entity-name">HQ</span><div class="mock-entity-bars"><div class="mock-entity-cost" style="width:25%"></div><div class="mock-entity-nbv" style="width:18%"></div></div></div>
+                  <div class="mock-entity"><span class="mock-entity-name">Memory Care</span><div class="mock-entity-bars"><div class="mock-entity-cost" style="width:15%"></div><div class="mock-entity-nbv" style="width:12%"></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Assets View -->
+          <div class="mock-view" id="mv-assets">
+            <div class="mock-title" style="margin-bottom:14px">Assets <span style="font-size:11px;font-weight:400;color:var(--light);margin-left:6px">257 assets across 5 entities</span></div>
+            <div class="mock-table-header"><span>Asset</span><span>Category</span><span>Method</span><span>Cost</span><span>NBV</span></div>
+            <div class="mock-table-row"><span class="asset-name">Dining Area Remodel</span><span>Leasehold</span><span class="method">SL/FM</span><span>$55,000</span><span>$45,833</span></div>
+            <div class="mock-table-row"><span class="asset-name">Admin Computers</span><span>Equipment</span><span class="method">SL/FM</span><span>$8,500</span><span>$6,375</span></div>
+            <div class="mock-table-row"><span class="asset-name">Parking Expansion</span><span>Site Improv.</span><span class="method">SL/FM</span><span>$33,000</span><span>$28,417</span></div>
+            <div class="mock-table-row"><span class="asset-name">Roof</span><span>Building</span><span class="method">MSLT/MM</span><span>$152,265</span><span>$142,748</span></div>
+            <div class="mock-table-row"><span class="asset-name">2016 Ford F150</span><span>Vehicle</span><span class="method">SL/FM</span><span>$14,200</span><span>$3,550</span></div>
+            <div class="mock-table-row"><span class="asset-name">Commercial Dishwasher</span><span>Equipment</span><span class="method">SL/FM</span><span>$12,400</span><span>$8,267</span></div>
+            <div class="mock-table-row"><span class="asset-name">Pneumatic Controls</span><span>Equipment</span><span class="method">SL/FM</span><span>$86,000</span><span>$71,667</span></div>
+          </div>
+
+          <!-- Reports View -->
+          <div class="mock-view" id="mv-reports">
+            <div class="mock-title" style="margin-bottom:14px">Reports</div>
+            <div class="mock-report-bar">
+              <span class="mock-report-select active-select" data-report="summary">Depr. Summary</span>
+              <span class="mock-report-select" data-report="rollforward">Roll Forward</span>
+              <span class="mock-report-select" data-report="register">Asset Register</span>
+              <span class="mock-report-select" data-report="additions">Additions</span>
+              <span class="mock-report-select" data-report="disposals">Disposals</span>
+            </div>
+            <!-- Source numbers (all reports derive from these):
+                 HQ: 5 assets, $392K cost, $42K beg accum, $350K beg NBV, $50K annual depr ($4.2K/mo)
+                 Assisted: 29 assets, $8.3M cost, $3.2M beg accum, $5.1M beg NBV, $327K annual ($27.2K/mo), +$55K addition Feb
+                 Indep: 49 assets, $11.5M cost, $3.7M beg accum, $7.8M beg NBV, $371K annual ($30.9K/mo), -F150 disposal Feb
+                 Main Campus + Memory Care: remaining ~174 assets, ~$10.9M cost
+                 Total: 257 assets, $31.2M cost, $9.1M beg accum, $22.1M beg NBV, $75.5K/mo depr
+                 Convention: parentheses for all reductions, no color coding -->
+            <div class="mock-report-preview" id="rpt-summary">
+              <div class="mock-report-title-bar">Depreciation Summary — Book (GAAP)</div>
+              <div class="mock-report-subtitle">1/1/2026 – 12/31/2026 · 5 entities · 257 assets</div>
+              <div class="mock-table-header" style="grid-template-columns:1.4fr 0.5fr 0.9fr 0.9fr 0.9fr 0.9fr"><span>Entity</span><span>#</span><span>Cost</span><span>Beg. Accum</span><span>Depr.</span><span>NBV</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.4fr 0.5fr 0.9fr 0.9fr 0.9fr 0.9fr"><span class="asset-name">HQ</span><span>5</span><span>$392K</span><span>$42K</span><span>$50K</span><span>$300K</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.4fr 0.5fr 0.9fr 0.9fr 0.9fr 0.9fr"><span class="asset-name">Assisted Living</span><span>29</span><span>$8.3M</span><span>$3.2M</span><span>$327K</span><span>$4.8M</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.4fr 0.5fr 0.9fr 0.9fr 0.9fr 0.9fr"><span class="asset-name">Indep. Living</span><span>49</span><span>$11.5M</span><span>$3.7M</span><span>$371K</span><span>$7.4M</span></div>
+            </div>
+            <div class="mock-report-preview" id="rpt-rollforward" style="display:none">
+              <div class="mock-report-title-bar">Roll Forward — Book (GAAP)</div>
+              <div class="mock-report-subtitle">1/1/2026 – 3/31/2026 · All Entities</div>
+              <div class="mock-table-header" style="grid-template-columns:1.4fr 0.9fr 0.9fr 0.9fr 0.9fr 0.9fr"><span>Entity</span><span>Beg. NBV</span><span>Additions</span><span>Disposals</span><span>Depr.</span><span>End. NBV</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.4fr 0.9fr 0.9fr 0.9fr 0.9fr 0.9fr"><span class="asset-name">HQ</span><span>$350K</span><span>$19K</span><span>—</span><span>($13K)</span><span>$356K</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.4fr 0.9fr 0.9fr 0.9fr 0.9fr 0.9fr"><span class="asset-name">Assisted Living</span><span>$5.1M</span><span>$55K</span><span>—</span><span>($82K)</span><span>$5.1M</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.4fr 0.9fr 0.9fr 0.9fr 0.9fr 0.9fr"><span class="asset-name">Indep. Living</span><span>$7.8M</span><span>—</span><span>($4K)</span><span>($93K)</span><span>$7.7M</span></div>
+            </div>
+            <div class="mock-report-preview" id="rpt-register" style="display:none">
+              <div class="mock-report-title-bar">Asset Register</div>
+              <div class="mock-report-subtitle">As of 3/31/2026 · All Entities · 257 assets</div>
+              <div class="mock-table-header" style="grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.6fr 0.7fr"><span>Asset</span><span>Entity</span><span>In Service</span><span>Cost</span><span>Method</span><span>NBV</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.6fr 0.7fr"><span class="asset-name">Dining Remodel</span><span>Assisted</span><span>6/2023</span><span>$55K</span><span class="method">SL/FM</span><span>$46K</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.6fr 0.7fr"><span class="asset-name">Roof</span><span>Indep.</span><span>11/2020</span><span>$152K</span><span class="method">MSLT</span><span>$143K</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.8fr 0.7fr 0.7fr 0.6fr 0.7fr"><span class="asset-name">Parking Lot</span><span>Main</span><span>3/2022</span><span>$33K</span><span class="method">SL/FM</span><span>$28K</span></div>
+            </div>
+            <div class="mock-report-preview" id="rpt-additions" style="display:none">
+              <div class="mock-report-title-bar">Additions Report</div>
+              <div class="mock-report-subtitle">1/1/2026 – 3/31/2026 · 3 assets added</div>
+              <div class="mock-table-header" style="grid-template-columns:1.5fr 0.9fr 0.8fr 0.8fr 0.8fr"><span>Asset</span><span>Entity</span><span>In Service</span><span>Cost</span><span>Method</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.9fr 0.8fr 0.8fr 0.8fr"><span class="asset-name">Server Room UPS</span><span>HQ</span><span>1/15/2026</span><span>$18,500</span><span class="method">SL/FM</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.9fr 0.8fr 0.8fr 0.8fr"><span class="asset-name">Dining Remodel Ph2</span><span>Assisted</span><span>2/1/2026</span><span>$55,000</span><span class="method">SL/FM</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.9fr 0.8fr 0.8fr 0.8fr"><span class="asset-name">Landscaping — East</span><span>Main</span><span>3/10/2026</span><span>$22,400</span><span class="method">SL/FM</span></div>
+            </div>
+            <div class="mock-report-preview" id="rpt-disposals" style="display:none">
+              <div class="mock-report-title-bar">Disposals Report</div>
+              <div class="mock-report-subtitle">1/1/2026 – 3/31/2026 · 1 disposal</div>
+              <div class="mock-table-header" style="grid-template-columns:1.5fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr"><span>Asset</span><span>Disposed</span><span>Cost</span><span>Accum</span><span>Proceeds</span><span>Gain/(Loss)</span></div>
+              <div class="mock-table-row" style="grid-template-columns:1.5fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr"><span class="asset-name">2016 Ford F150</span><span>2/28/26</span><span>$14,200</span><span>$10,650</span><span>$5,000</span><span>$1,450</span></div>
+            </div>
+          </div>
+
+          <!-- Journal Entries View -->
+          <div class="mock-view" id="mv-journal">
+            <div class="mock-title" style="margin-bottom:6px">Journal Entries</div>
+            <div class="mock-je-period">
+              <span class="mock-je-label">March 2026 · Book Depreciation</span>
+              <span class="mock-je-badge">Ready to post</span>
+            </div>
+            <div class="mock-je-row header"><span>Entity</span><span>Account</span><span>Debit</span><span>Credit</span></div>
+            <div class="mock-je-row"><span class="mock-je-entity">HQ</span><span>6100 Depr Expense</span><span class="mock-je-debit">$5,003.74</span><span></span></div>
+            <div class="mock-je-row"><span class="mock-je-entity">HQ</span><span>1700 Accum Depr</span><span></span><span class="mock-je-credit">$5,003.74</span></div>
+            <div class="mock-je-row"><span class="mock-je-entity">Assisted</span><span>6100 Depr Expense</span><span class="mock-je-debit">$27,570.57</span><span></span></div>
+            <div class="mock-je-row"><span class="mock-je-entity">Assisted</span><span>1700 Accum Depr</span><span></span><span class="mock-je-credit">$27,570.57</span></div>
+            <div class="mock-je-row"><span class="mock-je-entity">Main</span><span>6100 Depr Expense</span><span class="mock-je-debit">$18,446.53</span><span></span></div>
+            <div class="mock-je-row"><span class="mock-je-entity">Main</span><span>1700 Accum Depr</span><span></span><span class="mock-je-credit">$18,446.53</span></div>
+            <div class="mock-je-row" style="border-top:2px solid var(--ink);font-weight:600;margin-top:2px;padding-top:6px"><span></span><span>Total</span><span class="mock-je-debit">$51,020.84</span><span class="mock-je-credit">$51,020.84</span></div>
+            <div style="text-align:center;color:var(--accent);font-weight:600;font-size:9px;margin-top:6px;font-family:'IBM Plex Mono',monospace">✓ Debits = Credits</div>
+          </div>
+
+          <!-- Import View -->
+          <div class="mock-view" id="mv-import">
+            <div class="mock-title" style="margin-bottom:14px">Import Assets</div>
+            <div class="mock-import-zone" id="mockDropZone">
+              <div class="mock-import-icon" id="mockDropIcon">&#8593;</div>
+              <div class="mock-import-text" id="mockDropText"><strong>Drop your file here</strong> or click to browse</div>
+              <div class="mock-import-formats" id="mockDropFormats"><span class="mock-import-fmt">.csv</span><span class="mock-import-fmt">.xlsx</span><span class="mock-import-fmt">.xls</span></div>
+            </div>
+            <div style="font-size:10px;color:var(--light);line-height:1.6" id="mockDropDesc">
+              Export from any system — we'll map your columns automatically. Works with exports from legacy depreciation software, ERP systems, and spreadsheets. No reformatting required.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /mock-frame -->
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══ S2: OUTCOMES ═══ -->
+<section class="outcomes">
+  <div class="outcomes-grid">
+    <div class="outcome reveal"><div class="outcome-metric">Any date</div><div class="outcome-desc">Net book value, past or future</div></div>
+    <div class="outcome reveal"><div class="outcome-metric">2 clicks</div><div class="outcome-desc">Journal entry, balanced and exportable</div></div>
+    <div class="outcome reveal"><div class="outcome-metric">1 app<span class="fn-wrap">*<span class="fn-pop">One client. 9 entities, 2,200 assets, 54 spreadsheets every year — before counting the versions.</span></span></div><div class="outcome-desc">Replaces 54 spreadsheets every year</div></div>
+    <div class="outcome reveal"><div class="outcome-metric">$0 until live</div><div class="outcome-desc">You don't pay during setup</div></div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══ S3a: PRODUCT MOMENTS ═══ -->
+<section class="moments">
+
+  <!-- M1: File Graveyard -->
+  <div class="moment reveal" style="display:block;padding:52px 0;border-top:1px solid var(--rule)">
+    <div style="max-width:600px;margin-bottom:48px">
+      <h3 style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;line-height:1.2;margin-bottom:12px">Everything in one place.</h3>
+      <p style="font-size:14px;line-height:1.65;color:var(--mid)">One spreadsheet per entity per ownership level per year — each with four tabs — gets unmanageable fast. With Bricks, everything is in one place and finding what you need takes seconds.</p>
+    </div>
+    <div class="moment-stage m1-stage" id="m1-stage">
+      <!-- Windows Explorer -->
+      <div class="win-explorer" id="m1-explorer">
+        <div class="win-titlebar">
+          <div class="win-titlebar-text">2025</div>
+          <div class="win-controls-m1">
+            <button class="win-ctrl"><svg viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg></button>
+            <button class="win-ctrl"><svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg></button>
+            <button class="win-ctrl win-ctrl-close"><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.2"/></svg></button>
+          </div>
+        </div>
+        <div class="win-toolbar">
+          <button class="win-nav-btn"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M8 1L3 6L8 11" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+          <button class="win-nav-btn"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M4 1L9 6L4 11" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+          <div class="win-breadcrumb">
+            Fixed Assets <span class="sep">›</span> Sunrise LLC <span class="sep">›</span> Tax <span class="sep">›</span> <strong>2025</strong>
+          </div>
+        </div>
+        <div class="win-file-list" id="m1-file-list">
+          <div class="win-file-header">
+            <span>Name</span><span>Date modified</span><span style="text-align:right">Size</span>
+          </div>
+          <div class="win-file-row" data-idx="0"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_2025.xlsx</div><div class="win-file-date">1/3/2025</div><div class="win-file-size">2.4 MB</div></div>
+          <div class="win-file-row" data-idx="1"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_2025_v2.xlsx</div><div class="win-file-date">1/15/2025</div><div class="win-file-size">3.1 MB</div></div>
+          <div class="win-file-row" data-idx="2"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_2025_v2_REVISED.xlsx</div><div class="win-file-date">2/2/2025</div><div class="win-file-size">4.8 MB</div></div>
+          <div class="win-file-row" data-idx="3"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_2025_v3_auditor.xlsx</div><div class="win-file-date">2/18/2025</div><div class="win-file-size">5.2 MB</div></div>
+          <div class="win-file-row" data-idx="4"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_2025_v3_FINAL.xlsx</div><div class="win-file-date">3/1/2025</div><div class="win-file-size">5.9 MB</div></div>
+          <div class="win-file-row" data-idx="5"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_FINAL_corrected.xlsx</div><div class="win-file-date">3/4/2025</div><div class="win-file-size">6.3 MB</div></div>
+          <div class="win-file-row" data-idx="6"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Fixed_Assets_USE_THIS_ONE.xlsx</div><div class="win-file-date">3/12/2025</div><div class="win-file-size">47.2 MB</div></div>
+          <div class="win-file-row" data-idx="7"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon" style="opacity:0.4">X</div></div><span class="temp-indicator">~$Fixed_Assets_USE_THIS_ONE.xlsx</span></div><div class="win-file-date">3/12/2025</div><div class="win-file-size">0 KB</div></div>
+          <div class="win-file-row" data-idx="8"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Disposals_2025_Q1.xlsx</div><div class="win-file-date">3/14/2025</div><div class="win-file-size">1.8 MB</div></div>
+          <div class="win-file-row" data-idx="9"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>Additions_2025_draft.xlsx</div><div class="win-file-date">3/15/2025</div><div class="win-file-size">2.2 MB</div></div>
+          <div class="win-file-row" data-idx="10"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>JE_January_2025.xlsx</div><div class="win-file-date">2/1/2025</div><div class="win-file-size">0.8 MB</div></div>
+          <div class="win-file-row" data-idx="11"><div class="win-file-name"><div class="win-file-icon"><div class="excel-icon">X</div></div>JE_February_2025.xlsx</div><div class="win-file-date">3/3/2025</div><div class="win-file-size">0.9 MB</div></div>
+        </div>
+        <div class="win-statusbar"><span id="m1-item-count">0 files</span></div>
+      </div>
+
+      <!-- Selection rectangle -->
+      <div class="selection-rect" id="m1-select-rect"></div>
+
+      <!-- Drag ghost -->
+      <div class="drag-ghost" id="m1-drag-ghost">
+        <span class="count-badge">12</span> 12 files
+      </div>
+
+      <!-- Fake cursor -->
+      <svg class="fake-cursor" id="m1-cursor" viewBox="0 0 14 20"><path d="M0 0L0 16L4 12L7 19L9 18L6 11L11 11Z" fill="white" stroke="#333" stroke-width="1"/></svg>
+
+      <!-- Dialog overlay -->
+      <div class="win-dialog-overlay" id="m1-dialog">
+        <div class="win-dialog">
+          <div class="win-dialog-title">Bricks Assets</div>
+          <div class="win-dialog-text">Replace 12+ spreadsheets with one app?</div>
+          <div class="win-dialog-buttons">
+            <button class="win-dialog-btn">I'll keep my spreadsheets</button>
+            <button class="win-dialog-btn primary" id="m1-dialog-yes">Import to Bricks</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: icon at top, import zone below, then register replaces it -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;flex:1;min-width:0">
+        <!-- Bricks app icon (drag target) -->
+        <div class="bricks-drop-target" id="m1-drop-target" style="display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div class="bricks-app-icon" id="m1-app-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/>
+              <path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/>
+              <path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/>
+            </svg>
+          </div>
+          <div class="bricks-app-icon-label">Bricks Assets</div>
+        </div>
+
+        <!-- Import zone -->
+        <div class="bricks-import-zone" id="m1-import-zone" style="max-width:100%;width:100%">
+          <div class="bricks-import-zone-icon">&#8595;</div>
+          <div class="bricks-import-zone-text">Drop files to import</div>
+          <div class="bricks-import-zone-hint">CSV, XLSX, or any export format</div>
+          <div class="importing-bar" id="m1-import-bar"><div class="importing-fill" id="m1-import-fill"></div></div>
+          <div class="importing-status" id="m1-import-status">Importing 12 files... 257 assets found</div>
+        </div>
+
+        <!-- Bricks app screenshot (replaces everything) -->
+        <div class="bricks-after" id="m1-after" style="position:absolute;left:0;right:0;top:0;width:100%">
+
+          <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(50,55,65,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.08)">
+            <img src="/fixed-assets/asset-list.png" alt="Bricks Assets — Asset Register" style="width:100%;display:block">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Replay sits outside the animation stage so it's never clipped -->
+    <div id="m1-replay-wrap" style="text-align:right;margin-top:8px;visibility:hidden">
+      <button class="replay-btn" id="m1-replay" style="position:static;opacity:1">&#8635; Replay</button>
+    </div>
+  </div>
+
+  <!-- M2: Formula Grind -->
+  <div class="moment reveal" style="display:block;padding:52px 0">
+    <div style="max-width:600px;margin-bottom:16px">
+      <h3 style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;line-height:1.2;margin-bottom:12px">Any asset. Any date. Any book.</h3>
+      <p style="font-size:14px;line-height:1.65;color:var(--mid)">You shouldn't have to reverse-engineer a mid-year value every time someone asks what an asset is worth. Pick a date. See the answer. Switch between Book, Tax, AMT, and State with a click.</p>
+      <div style="margin-top:20px;font-family:'Source Serif 4',serif;font-size:14px;font-style:italic;line-height:1.55;color:var(--mid);padding-left:16px;border-left:2px solid var(--accent)">
+        "The schedule we were working on before, they don't really make it easy because it's a year-end statement. If I'm looking in the middle of the year, I don't know where I'm at depreciation-wise. So this tells me as of today, this is how much it's worth, this is how much depreciation is left, and I can just book the depreciation right off really fast."
+        <span style="display:block;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-style:normal;color:var(--light);text-transform:uppercase;letter-spacing:.06em">— Controller, Manufacturing</span>
+      </div>
+    </div>
+    <div class="moment-stage m2-stage" id="m2-stage">
+      <!-- Excel Window -->
+      <div class="excel-window" id="m2-excel">
+        <div class="excel-titlebar">
+          <div class="excel-titlebar-text">Fixed_Assets_USE_THIS_ONE.xlsx — Excel</div>
+          <div class="win-controls-m1">
+            <button class="win-ctrl"><svg viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg></button>
+            <button class="win-ctrl"><svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg></button>
+            <button class="win-ctrl win-ctrl-close"><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.2"/></svg></button>
+          </div>
+        </div>
+        <div class="excel-ribbon">
+          <span>Home</span><span>Insert</span><span>Page Layout</span><span>Formulas</span><span>Data</span>
+        </div>
+        <div class="excel-formula-bar">
+          <div class="excel-cell-ref" id="m2-cell-ref">H2</div>
+          <div class="excel-fx">fx</div>
+          <div class="excel-formula-text" id="m2-formula">=C2-G2</div>
+        </div>
+        <div class="excel-sheet">
+          <table class="excel-grid" id="m2-grid">
+            <thead>
+              <tr>
+                <th class="row-num"></th>
+                <th style="min-width:120px">A</th>
+                <th style="min-width:75px">B</th>
+                <th style="min-width:75px">C</th>
+                <th style="min-width:55px">D</th>
+                <th style="min-width:60px">E</th>
+                <th style="min-width:75px">F</th>
+                <th style="min-width:80px">G</th>
+                <th style="min-width:80px">H</th>
+                <th style="min-width:70px" class="new-col" id="colI-h">I</th>
+                <th style="min-width:80px" class="new-col" id="colJ-h">J</th>
+                <th style="min-width:60px" class="new-col" id="colK-h">K</th>
+                <th style="min-width:85px" class="new-col" id="colL-h">L</th>
+                <th style="min-width:85px" class="new-col" id="colM-h">M</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="row-num">1</th>
+                <td class="label">Asset</td>
+                <td class="label">In Service</td>
+                <td class="label">Cost</td>
+                <td class="label">Life</td>
+                <td class="label">Method</td>
+                <td class="label">Annual Depr</td>
+                <td class="label">Beg Accum</td>
+                <td class="label">12/31 NBV</td>
+                <td class="new-col new-header" id="I1">Monthly</td>
+                <td class="new-col new-header" id="J1">Mos to Sep</td>
+                <td class="new-col new-header" id="K1">Conv?</td>
+                <td class="new-col new-header" id="L1">Accum 9/25</td>
+                <td class="new-col new-header" id="M1">NBV 9/25</td>
+              </tr>
+              <tr>
+                <th class="row-num">2</th>
+                <td id="A2">HVAC System</td>
+                <td id="B2" style="font-size:10px">3/15/2021</td>
+                <td id="C2" class="number">$120,000</td>
+                <td id="D2m" class="number">10 yr</td>
+                <td id="E2m" style="font-family:'IBM Plex Mono',monospace;font-size:10px">SL/FM</td>
+                <td id="F2" class="number">$12,000</td>
+                <td id="G2m" class="number">$48,000</td>
+                <td class="number" id="H2">$60,000</td>
+                <td class="new-col number" id="I2"></td>
+                <td class="new-col number" id="J2"></td>
+                <td class="new-col number" id="K2"></td>
+                <td class="new-col number" id="L2"></td>
+                <td class="new-col number" id="M2"></td>
+              </tr>
+              <tr>
+                <th class="row-num">3</th>
+                <td>Parking Resurface</td>
+                <td style="font-size:10px">6/1/2023</td>
+                <td class="number">$85,000</td>
+                <td class="number">15 yr</td>
+                <td style="font-family:'IBM Plex Mono',monospace;font-size:10px">SL/FM</td>
+                <td class="number">$5,667</td>
+                <td class="number">$9,444</td>
+                <td class="number">$69,889</td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+              </tr>
+              <tr>
+                <th class="row-num">4</th>
+                <td>Roof Replacement</td>
+                <td style="font-size:10px">11/15/2020</td>
+                <td class="number">$210,000</td>
+                <td class="number">39 yr</td>
+                <td style="font-family:'IBM Plex Mono',monospace;font-size:10px">MSLT/MM</td>
+                <td class="number">$5,385</td>
+                <td class="number">$27,308</td>
+                <td class="number">$177,308</td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+              </tr>
+              <tr>
+                <th class="row-num">5</th>
+                <td>Comm. Dishwasher</td>
+                <td style="font-size:10px">9/1/2024</td>
+                <td class="number">$12,400</td>
+                <td class="number">7 yr</td>
+                <td style="font-family:'IBM Plex Mono',monospace;font-size:10px">SL/FM</td>
+                <td class="number">$1,771</td>
+                <td class="number">$591</td>
+                <td class="number">$10,038</td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+                <td class="new-col number"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="excel-statusbar"><span>Ready to switch?</span><span>Sheet1</span></div>
+      </div>
+
+      <!-- Screenshot + floating answer card -->
+      <div id="m2-screenshot" style="position:absolute;left:0;right:0;top:0;width:100%;opacity:0;transition:opacity 0.6s ease">
+
+        <div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid rgba(50,55,65,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.08);max-height:380px">
+          <img src="/fixed-assets/asset-detail.png" alt="Bricks Assets — Asset Detail" style="width:100%;display:block">
+          <!-- Floating answer card — the "lens" -->
+          <div class="bricks-answer" id="m2-after" style="position:absolute;bottom:20px;right:20px;max-width:240px;z-index:10">
+            <div class="bricks-answer-card" style="padding:18px;box-shadow:0 8px 28px rgba(0,0,0,0.14);border:1px solid rgba(50,55,65,0.1);backdrop-filter:blur(8px);background:rgba(255,255,255,0.95);border-radius:8px">
+              <div style="font-family:'Source Serif 4',serif;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px">HVAC System</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--light);margin-bottom:12px">Sep 30, 2025 · Book · SL/FM</div>
+              <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px;color:var(--mid);border-bottom:1px solid var(--rule)">
+                <span>Cost</span><span style="font-family:'IBM Plex Mono',monospace">$120,000</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px;color:var(--mid);border-bottom:1px solid var(--rule)">
+                <span>Accum. Depr.</span><span style="font-family:'IBM Plex Mono',monospace">$54,000</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:6px 0 0;font-size:12px;font-weight:600;color:var(--ink);border-top:2px solid var(--ink);margin-top:2px">
+                <span>NBV</span><span style="font-family:'Source Serif 4',serif;font-size:15px;color:var(--accent)">$66,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="replay-btn" id="m2-replay">&#8635; Replay</button>
+    </div>
+    <!-- M2 replay outside stage -->
+    <div id="m2-replay-wrap" style="text-align:right;margin-top:8px;visibility:hidden">
+      <button class="replay-btn" id="m2-replay-btn" style="position:static;opacity:1">&#8635; Replay</button>
+    </div>
+  </div>
+
+  <!-- M3: Monthly Close Race -->
+  <div class="moment reveal" style="display:block;padding:52px 0">
+    <div style="max-width:600px;margin-bottom:48px">
+      <h3 style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;line-height:1.2;margin-bottom:12px">Close the books.</h3>
+      <p style="font-size:14px;line-height:1.65;color:var(--mid)">You've typed this journal entry before. Entity by entity, account by account, checking the math twice. With Bricks, two clicks.</p>
+    </div>
+    <div class="moment-stage m3-race" id="m3-stage">
+      <div class="m3-header-row">
+        <div class="m3-panel-label m3-label-old">The old way <span class="m3-timer" id="m3-timer-left">0:00</span></div>
+        <div class="m3-panel-label" style="text-align:center;color:var(--light)">vs</div>
+        <div class="m3-panel-label m3-label-bricks"><span class="m3-timer" id="m3-timer-right">0:00</span> Bricks</div>
+      </div>
+
+      <div class="m3-panels">
+        <!-- LEFT: Excel JE -->
+        <div class="m3-panel-left">
+          <div class="m3-counter m3-counter-left" id="m3-keystrokes">Keystrokes: 0</div>
+          <div class="m3-excel" id="m3-excel">
+            <div class="excel-titlebar">
+              <div class="excel-titlebar-text">March_2025_Journal_Entry.xlsx — Excel</div>
+              <div class="win-controls">
+                <button class="win-ctrl"><svg viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg></button>
+                <button class="win-ctrl"><svg viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" stroke="currentColor" fill="none" stroke-width="1"/></svg></button>
+                <button class="win-ctrl win-ctrl-close"><svg viewBox="0 0 10 10"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" stroke-width="1.2"/></svg></button>
+              </div>
+            </div>
+            <div style="overflow-x:auto;background:white">
+              <table class="m3-je-grid" id="m3-grid">
+                <thead>
+                  <tr>
+                    <th class="row-num"></th>
+                    <th class="col-head" style="min-width:90px">Entity</th>
+                    <th class="col-head" style="min-width:55px">GL Acct</th>
+                    <th class="col-head" style="min-width:110px">Account Name</th>
+                    <th class="col-head-num" style="min-width:75px">Debit</th>
+                    <th class="col-head-num" style="min-width:75px">Credit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th class="row-num">1</th><td id="m3-r1c1"></td><td id="m3-r1c2"></td><td id="m3-r1c3"></td><td id="m3-r1c4" class="num"></td><td id="m3-r1c5" class="num"></td></tr>
+                  <tr><th class="row-num">2</th><td id="m3-r2c1"></td><td id="m3-r2c2"></td><td id="m3-r2c3"></td><td id="m3-r2c4" class="num"></td><td id="m3-r2c5" class="num"></td></tr>
+                  <tr><th class="row-num">3</th><td id="m3-r3c1"></td><td id="m3-r3c2"></td><td id="m3-r3c3"></td><td id="m3-r3c4" class="num"></td><td id="m3-r3c5" class="num"></td></tr>
+                  <tr><th class="row-num">4</th><td id="m3-r4c1"></td><td id="m3-r4c2"></td><td id="m3-r4c3"></td><td id="m3-r4c4" class="num"></td><td id="m3-r4c5" class="num"></td></tr>
+                  <tr><th class="row-num">5</th><td id="m3-r5c1"></td><td id="m3-r5c2"></td><td id="m3-r5c3"></td><td id="m3-r5c4" class="num"></td><td id="m3-r5c5" class="num"></td></tr>
+                  <tr><th class="row-num">6</th><td id="m3-r6c1"></td><td id="m3-r6c2"></td><td id="m3-r6c3"></td><td id="m3-r6c4" class="num"></td><td id="m3-r6c5" class="num"></td></tr>
+                  <tr><th class="row-num">7</th><td id="m3-r7c1"></td><td id="m3-r7c2"></td><td id="m3-r7c3"></td><td id="m3-r7c4" class="num"></td><td id="m3-r7c5" class="num"></td></tr>
+                  <tr><th class="row-num">8</th><td id="m3-r8c1"></td><td id="m3-r8c2"></td><td id="m3-r8c3"></td><td id="m3-r8c4" class="num"></td><td id="m3-r8c5" class="num"></td></tr>
+                  <tr><th class="row-num">9</th><td id="m3-r9c1"></td><td id="m3-r9c2"></td><td id="m3-r9c3"></td><td id="m3-r9c4" class="num"></td><td id="m3-r9c5" class="num"></td></tr>
+                  <tr><th class="row-num">10</th><td id="m3-r10c1"></td><td id="m3-r10c2"></td><td id="m3-r10c3"></td><td id="m3-r10c4" class="num"></td><td id="m3-r10c5" class="num"></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="m3-balance-bar" id="m3-balance"></div>
+            <div class="excel-statusbar"><span>Ready</span><span>Sheet1</span></div>
+          </div>
+        </div>
+
+        <div class="m3-divider"></div>
+
+        <!-- RIGHT: Bricks -->
+        <div class="m3-panel-right" style="position:relative">
+          <div class="m3-counter m3-counter-right" id="m3-clicks">Clicks: 0</div>
+          <div class="m3-bricks-panel">
+            <div class="m3-bricks-header">
+              <div class="m3-bricks-title">Journal Entries</div>
+              <div class="m3-bricks-controls">
+                <select class="m3-period-select" id="m3-period">
+                  <option>Select period...</option>
+                </select>
+                <button class="m3-gen-btn" id="m3-gen">Generate</button>
+                <div style="position:relative;display:inline-block">
+                  <button class="m3-export-btn" id="m3-export">Export Summary</button>
+                  <div class="m3-download-toast" id="m3-toast">&#10003; Downloaded</div>
+                </div>
+              </div>
+            </div>
+            <div class="m3-bricks-table-area">
+              <div class="m3-bricks-empty" id="m3-empty">Select a period and click Generate</div>
+              <table class="m3-bricks-je-table" id="m3-bricks-table">
+                <thead>
+                  <tr><th>Entity</th><th>GL Account</th><th class="num-col">Debit</th><th class="num-col">Credit</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="je-row"><td>HQ</td><td>6100 Depr Expense</td><td class="num-col debit">$5,003.74</td><td class="num-col"></td></tr>
+                  <tr class="je-row"><td>HQ</td><td>1700 Accum Depr</td><td class="num-col"></td><td class="num-col credit">$5,003.74</td></tr>
+                  <tr class="je-row"><td>Assisted Living</td><td>6100 Depr Expense</td><td class="num-col debit">$27,570.57</td><td class="num-col"></td></tr>
+                  <tr class="je-row"><td>Assisted Living</td><td>1700 Accum Depr</td><td class="num-col"></td><td class="num-col credit">$27,570.57</td></tr>
+                  <tr class="je-row"><td>Indep. Living</td><td>6100 Depr Expense</td><td class="num-col debit">$24,533.86</td><td class="num-col"></td></tr>
+                  <tr class="je-row"><td>Indep. Living</td><td>1700 Accum Depr</td><td class="num-col"></td><td class="num-col credit">$24,533.86</td></tr>
+                  <tr class="je-row"><td>Main Campus</td><td>6100 Depr Expense</td><td class="num-col debit">$18,446.53</td><td class="num-col"></td></tr>
+                  <tr class="je-row"><td>Main Campus</td><td>1700 Accum Depr</td><td class="num-col"></td><td class="num-col credit">$18,446.53</td></tr>
+                  <tr class="je-row"><td>Memory Care</td><td>6100 Depr Expense</td><td class="num-col debit">$2,917.19</td><td class="num-col"></td></tr>
+                  <tr class="je-row"><td>Memory Care</td><td>1700 Accum Depr</td><td class="num-col"></td><td class="num-col credit">$2,917.19</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="m3-bricks-balance" id="m3-bricks-bal">&#10003; Debits = Credits: $78,471.89</div>
+          </div>
+          <div class="m3-done-label" id="m3-done">Ready to post.</div>
+          <svg class="m3-bricks-cursor" id="m3-cursor" viewBox="0 0 14 20"><path d="M0 0L0 16L4 12L7 19L9 18L6 11L11 11Z" fill="white" stroke="#333" stroke-width="1"/></svg>
+        </div>
+      </div>
+
+      <!-- Screenshot (fades in after race) -->
+      <div id="m3-screenshot" class="m3-screenshot-after" style="position:absolute;left:0;right:0;top:0;width:100%;opacity:0;transition:opacity 0.6s ease;z-index:20">
+
+        <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(50,55,65,0.1);box-shadow:0 8px 32px rgba(0,0,0,0.08);max-height:400px">
+          <img src="/fixed-assets/journal-entries.png" alt="Bricks Assets — Journal Entries" style="width:100%;display:block">
+        </div>
+      </div>
+
+      <button class="replay-btn" id="m3-replay">&#8635; Replay</button>
+    </div>
+    <!-- Replay outside stage -->
+    <div id="m3-replay-wrap" style="text-align:right;margin-top:8px;visibility:hidden">
+      <button class="replay-btn" id="m3-replay-btn" style="position:static;opacity:1">&#8635; Replay</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══ S3b: TABLE STAKES ═══ -->
+<section class="table-stakes reveal">
+  <h3>Plus everything else you'd expect.</h3>
+  <div class="stakes-list">
+    <span class="tick">✓</span>SL/FM <span class="sep">·</span>
+    <span class="tick">✓</span>MACRS 200DB <span class="sep">·</span>
+    <span class="tick">✓</span>MACRS 150DB <span class="sep">·</span>
+    <span class="tick">✓</span>Section 179 <span class="sep">·</span>
+    <span class="tick">✓</span>Bonus Depreciation <span class="sep">·</span>
+    <span class="tick">✓</span>Half-Year <span class="sep">·</span>
+    <span class="tick">✓</span>Mid-Quarter <span class="sep">·</span>
+    <span class="tick">✓</span>Mid-Month <span class="sep">·</span>
+    <span class="tick">✓</span>Multi-entity <span class="sep">·</span>
+    <span class="tick">✓</span>Book + Tax + AMT + State <span class="sep">·</span>
+    <span class="tick">✓</span>Disposals with gain/loss <span class="sep">·</span>
+    <span class="tick">✓</span>CSV import from any system <span class="sep">·</span>
+    <span class="tick">✓</span>PDF, Excel, and CSV export
+  </div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mid);line-height:2.2;max-width:740px;margin:12px auto 0;text-align:center">
+    <span style="font-weight:600;color:var(--ink)">Reports:</span>
+    Depreciation Detail <span class="sep">·</span>
+    Depreciation Summary <span class="sep">·</span>
+    Roll Forward <span class="sep">·</span>
+    Asset Register <span class="sep">·</span>
+    Additions <span class="sep">·</span>
+    Disposals <span class="sep">·</span>
+    Tax Depreciation Detail <span class="sep">·</span>
+    Tax Elections <span class="sep">·</span>
+    Book-Tax Difference <span class="sep">·</span>
+    Journal Entries
+  </div>
+  <div style="margin-top:28px"><a href="#" data-track-cta="cta_click_mid1" onclick="openModal(event)" class="cta">See it with your data →</a></div>
+</section>
+
+<!-- ═══ S4: PROOF ═══ -->
+<section class="proof">
+  <div class="proof-inner">
+    <div class="proof-headline reveal">"Makes life a whole lot easier."</div>
+    <div class="proof-grid">
+      <!-- Top row: stories — longer, situational, emotional -->
+      <div class="proof-card story reveal">
+        <blockquote>"I have to go to our auditors and say, hey guys, we sold this. I think we acquired it in 2016. I think we paid about $20K. Is it fully depreciated? And then by the time I get my journal entry, a whole day's gone by. I mean, I want to be able to do these things on my own."</blockquote>
+        <div class="pq-attr">Controller, Manufacturing</div>
+      </div>
+      <div class="proof-card story reveal">
+        <blockquote>"Yeah, I love it. That's great, because this is what I didn't have before in QuickBooks. All I have is total assets, total depreciation, per year. I don't have it for each asset. So this is awesome."</blockquote>
+        <div class="pq-attr">Controller, Medical Practice</div>
+      </div>
+      <!-- Bottom row: verdicts — short, punchy, conclusive -->
+      <div class="proof-card verdict reveal">
+        <blockquote>"They just sent the renewal, and it was like $7,200. It was like enterprise level. We're just looking to right-size things."</blockquote>
+        <div class="pq-attr">Senior Accountant, Advertising</div>
+      </div>
+      <div class="proof-card verdict reveal">
+        <blockquote>"$600 a year — this is a no-brainer for me. It does what I'd like and more."</blockquote>
+        <div class="pq-attr">Finance Director, Medical Practice</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px"><a href="#" data-track-cta="cta_click_mid2" onclick="openModal(event)" class="cta" style="background:var(--accent);color:#fff">Book a walkthrough →</a></div>
+  </div>
+</section>
+
+<!-- ═══ S5: PRICING ═══ -->
+<section class="pricing reveal">
+  <div style="margin-bottom:8px"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Typical legacy software</div><span style="font-family:'Source Serif 4',serif;font-size:clamp(28px,4vw,48px);color:var(--light);text-decoration:line-through;font-weight:400">$7,200</span></div>
+  <div class="price-num">$600</div>
+  <div class="price-unit">per year</div>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mid);margin:20px 0 6px;line-height:1.8">Every method. Every book. Every report. Unlimited entities.</p>
+  <p class="price-cap">Up to 5,000 assets.</p>
+  <p class="price-over">More than that? <a href="#" onclick="openModal(event)">Let's talk.</a></p>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══ S6: SWITCHING ═══ -->
+<section class="switching">
+  <div class="switching-grid" style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+    <div class="switching-inner reveal">
+      <h2>You're live before your next monthly close.</h2>
+      <div class="sw-step"><strong>Send us your file.</strong><p>Spreadsheet, Bloomberg Tax export, Sage file, or any CSV. No reformatting needed.</p></div>
+      <div class="sw-step"><strong>We map and verify.</strong><p>We import your assets, match your fields, and verify every calculation against what you've already reported. Your beginning balances carry over, locked and immutable. We calculate forward from there.</p></div>
+      <div class="sw-step"><strong>You're running.</strong><p>Review your numbers, run your first reports, close the month.</p></div>
+      <div class="guarantee">You don't pay until you're live.</div>
+    </div>
+    <div class="reveal" style="display:flex;justify-content:center">
+      <div id="switchDropZone" style="width:100%;max-width:340px;border:2px dashed var(--rule-dark);border-radius:12px;padding:48px 32px;text-align:center;transition:all 0.2s ease">
+        <div style="font-size:32px;color:var(--light);margin-bottom:12px">&#9993;</div>
+        <div style="font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">Ready to switch?</div>
+        <div style="font-size:14px;color:var(--mid);line-height:1.6;margin-bottom:16px">Email your spreadsheet to<br><a href="mailto:sam.anderson@withbricks.com" style="color:var(--accent);text-decoration:none;font-weight:500">sam.anderson@withbricks.com</a></div>
+        <a href="#" onclick="openModal(event)" class="cta" style="font-size:14px;padding:12px 24px">Book a walkthrough →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══ S7: CTA ═══ -->
+<section class="final-cta" id="final">
+  <h2>Send us your spreadsheet.</h2>
+  <p>Book 30 minutes. Email your file to sam.anderson@withbricks.com before the call and we'll have your numbers ready.</p>
+  <a href="#" data-track-cta="cta_click_bottom" onclick="openModal(event)" class="cta cta-accent">Send us your spreadsheet →</a>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq">
+  <div class="faq-title">FAQ</div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Can I bring my existing data from spreadsheets or another system?</div>
+    <div class="faq-a">Yes. Send us your spreadsheet, Bloomberg Tax export, Sage file, or any CSV. We import your assets, match your fields, and verify every number against what you've already reported. Your historical data comes with you — nothing starts from scratch.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Will my auditor accept reports from Bricks?</div>
+    <div class="faq-a">Yes. Every report exports to PDF, Excel, and CSV in formats auditors expect — depreciation schedules, roll forwards, asset registers, journal entries. Our customers' auditors have reviewed and accepted these reports without issue.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Can it handle multiple entities with different ownership structures?</div>
+    <div class="faq-a">Yes. We support multi-entity reporting with separate books per entity, TIC (tenancy-in-common) percentage allocation, and consolidated views across all entities. One of our customers manages 9 entities with shared ownership structures in a single account.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Does it integrate with my accounting software?</div>
+    <div class="faq-a">Today: clean CSV, Excel, and PDF exports that match your GL structure. Direct integrations with QuickBooks and Sage Intacct are on the roadmap.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Does Bricks generate IRS tax forms (4562, 4797)?</div>
+    <div class="faq-a">No. Your CPA generates the forms. We give them the numbers — depreciation schedules, gain/loss on disposal, Section 179 detail — in the format they need.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">What depreciation methods do you support?</div>
+    <div class="faq-a">SL/FM, MACRS 200DB and 150DB (half-year, mid-quarter, mid-month conventions), Section 179, bonus depreciation, and Canadian CCA. If you have a method we don't handle yet, tell us — we've built every method a customer has asked for.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.parentElement.classList.toggle('open')}">Is my data secure?</div>
+    <div class="faq-a">Bricks runs on enterprise Postgres with row-level security, encrypted at rest and in transit. Your data is isolated by organization — no other customer can see it.</div>
+  </div>
+  <div style="text-align:center;margin-top:28px"><a href="#" data-track-cta="cta_click_postfaq" onclick="openModal(event)" class="cta">Send us your spreadsheet →</a></div>
+</section>
+
+<!-- Social proof line -->
+<div class="social-line">Used by controllers, accountants, CFOs, and CPAs across manufacturing, healthcare, senior living, and professional services.</div>
+
+<footer>
+  <span>© 2026 Bricks. All rights reserved.</span>
+  <span><a href="https://withbricks.com/privacy" style="color:var(--light);text-decoration:none">Privacy</a> · Fixed asset depreciation software</span>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3>Book a walkthrough</h3>
+    <p>30 minutes. Send your spreadsheet to <a href="mailto:sam.anderson@withbricks.com" style="color:var(--accent);text-decoration:none;font-weight:500">sam.anderson@withbricks.com</a> before the call and we'll have your numbers ready.</p>
+    <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/sam-anderson6/bricks-assets-demo?embed=true" style="min-height:580px;"></div>
+  </div>
+</div>
+
+</div><!-- /.window-frame -->
+
+<!-- Status bar -->
+<div class="status-bar" id="statusBar">
+  <span class="sb-left" id="sbReady">Ready to switch?</span>
+  <div class="sb-right">
+    <span class="sb-item"><span class="sb-label">AVERAGE:</span> minutes to close</span>
+    <span class="sb-item"><span class="sb-label">COUNT:</span> 58K assets</span>
+    <span class="sb-item"><span class="sb-label">SUM:</span> $600/yr</span>
+  </div>
+</div>
+
+<script>
+// ═══ HUBSPOT PRELOAD ═══
+// Load HubSpot Meetings script after page load so modal opens instantly
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var s = document.createElement('script');
+    s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    document.body.appendChild(s);
+  }, 1500); // 1.5s after load — doesn't compete with initial render
+});
+
+// ═══ MODAL ═══
+function openModal(e) {
+  if (e) e.preventDefault();
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (typeof gtag === 'function') gtag('event', 'modal_open', { page: window.location.pathname });
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ═══ HUBSPOT MEETING BOOKED → GOOGLE ADS CONVERSION ═══
+// HubSpot Meetings iframe sends a postMessage when a booking completes.
+// We listen for it and fire a gtag event so Google Ads can track real conversions.
+window.addEventListener('message', function(e) {
+  // Only accept messages from HubSpot
+  if (!e.origin || e.origin.indexOf('hubspot.com') === -1) return;
+  var data = e.data;
+  if (!data) return;
+  // HubSpot sends { meetingBookSucceeded: true } on successful booking
+  if (data.meetingBookSucceeded || (data.meetingPayload && data.meetingPayload.bookSucceeded)) {
+    if (typeof gtag === 'function') {
+      // GA4 event for our own tracking
+      gtag('event', 'BOOK_APPOINTMENT', { page: window.location.pathname });
+      // TODO: Sam — fill in your Google Ads conversion ID and label from the
+      // Google Ads UI (Conversions → BOOK_APPOINTMENT → Tag setup → Use gtag)
+      // gtag('event', 'conversion', { send_to: 'AW-XXXXXXXXXX/XXXXXXXXXXXXXXXXXXXX' });
+    }
+  }
+});
+
+// ═══ INTERACTIVE HERO MOCK ═══
+var mockUrls = {
+  dashboard: 'app.withbricks.com/org/sunrise/dashboard',
+  assets: 'app.withbricks.com/org/sunrise/assets',
+  reports: 'app.withbricks.com/org/sunrise/reports',
+  journal: 'app.withbricks.com/org/sunrise/journal-entries',
+  import: 'app.withbricks.com/org/sunrise/import'
+};
+function switchMock(view) {
+  document.querySelectorAll('.mock-sb-item').forEach(function(el) {
+    el.classList.toggle('active', el.dataset.view === view);
+  });
+  var urlEl = document.getElementById('mockUrl');
+  if (urlEl) urlEl.textContent = mockUrls[view] || mockUrls.dashboard;
+  document.querySelectorAll('.mock-view').forEach(function(el) { el.classList.remove('active'); });
+  var target = document.getElementById('mv-' + view);
+  if (target) target.classList.add('active');
+}
+document.querySelectorAll('.mock-report-select').forEach(function(el) {
+  el.addEventListener('click', function() {
+    document.querySelectorAll('.mock-report-select').forEach(function(s) { s.classList.remove('active-select'); });
+    this.classList.add('active-select');
+    // Show the matching report preview, hide others
+    var reportId = this.getAttribute('data-report');
+    document.querySelectorAll('.mock-report-preview').forEach(function(rpt) { rpt.style.display = 'none'; });
+    var target = document.getElementById('rpt-' + reportId);
+    if (target) target.style.display = '';
+  });
+});
+
+// ═══ CHROME DISMISS ═══
+function dismissChrome() {
+  var chrome = document.getElementById('winChrome');
+  var status = document.getElementById('statusBar');
+  var frame = document.querySelector('.window-frame');
+  if (chrome) { chrome.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; chrome.style.opacity = '0'; chrome.style.transform = 'translateY(-100%)'; setTimeout(function(){ chrome.style.display = 'none'; }, 300); }
+  if (status) { status.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; status.style.opacity = '0'; status.style.transform = 'translateY(100%)'; setTimeout(function(){ status.style.display = 'none'; }, 300); }
+  if (frame) { frame.style.transition = 'padding-top 0.3s ease, margin-bottom 0.3s ease'; frame.style.paddingTop = '0'; frame.style.marginBottom = '0'; }
+}
+
+// ═══ SCROLL REVEAL ═══
+var rObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.reveal').forEach(function(el) { rObs.observe(el); });
+
+// ═══ MOMENT 2: FORMULA GRIND ANIMATION ═══
+function typeText(el, text, speed) {
+  return new Promise(function(resolve) {
+    var i = 0;
+    el.innerHTML = '<span class="type-cursor"></span>';
+    var interval = setInterval(function() {
+      if (i < text.length) {
+        var cursor = el.querySelector('.type-cursor');
+        var span = document.createElement('span');
+        span.textContent = text[i];
+        el.insertBefore(span, cursor);
+        i++;
+      } else {
+        clearInterval(interval);
+        var cursor = el.querySelector('.type-cursor');
+        if (cursor) cursor.remove();
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+function typeBackspace(el, count, speed) {
+  return new Promise(function(resolve) {
+    var removed = 0;
+    var interval = setInterval(function() {
+      if (removed < count) {
+        var children = el.querySelectorAll('span:not(.type-cursor)');
+        if (children.length > 0) {
+          children[children.length - 1].remove();
+        }
+        removed++;
+      } else {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+function typeColorFormula(el, segments, speed) {
+  return new Promise(function(resolve) {
+    var segIdx = 0, charIdx = 0;
+    el.innerHTML = '<span class="type-cursor"></span>';
+    var cursor = el.querySelector('.type-cursor');
+    var interval = setInterval(function() {
+      if (segIdx >= segments.length) { clearInterval(interval); if (cursor) cursor.remove(); resolve(); return; }
+      var seg = segments[segIdx];
+      if (charIdx < seg.text.length) {
+        var span = document.createElement('span');
+        span.textContent = seg.text[charIdx];
+        if (seg.color) span.className = 'ref-' + seg.color;
+        el.insertBefore(span, cursor);
+        charIdx++;
+      } else {
+        segIdx++;
+        charIdx = 0;
+      }
+    }, speed);
+  });
+}
+
+function runMoment2() {
+  var excel = document.getElementById('m2-excel');
+  var cellRef = document.getElementById('m2-cell-ref');
+  var formulaText = document.getElementById('m2-formula');
+  var afterEl = document.getElementById('m2-after');
+  var replayBtn = document.getElementById('m2-replay');
+
+  // Reset all new columns
+  var newCols = document.querySelectorAll('#m2-grid .new-col');
+  newCols.forEach(function(c) { c.classList.remove('shown'); if (c.tagName === 'TD' && !c.classList.contains('new-header')) c.textContent = ''; });
+  afterEl.classList.remove('visible');
+  var m2Screenshot = document.getElementById('m2-screenshot');
+  if (m2Screenshot) m2Screenshot.style.opacity = '0';
+  var m2ReplayWrap = document.getElementById('m2-replay-wrap');
+  if (m2ReplayWrap) m2ReplayWrap.style.visibility = 'hidden';
+  excel.style.opacity = '1';
+  excel.style.transform = 'none';
+  excel.style.display = '';
+  formulaText.innerHTML = '=C2-G2';
+  cellRef.textContent = 'H2';
+
+  // Remove active cell and color highlights from all
+  document.querySelectorAll('#m2-grid td').forEach(function(td) {
+    td.classList.remove('active-cell', 'cell-hl-blue', 'cell-hl-red', 'cell-hl-purple', 'cell-hl-green', 'cell-hl-orange');
+  });
+  document.getElementById('H2').classList.add('active-cell');
+  // Reset horizontal scroll
+  var sheetReset = document.querySelector('#m2-excel .excel-sheet');
+  if (sheetReset) sheetReset.scrollLeft = 0;
+
+  function showCol(colLetter) {
+    var hdr = document.getElementById('col' + colLetter + '-h');
+    if (hdr) hdr.classList.add('shown');
+    var label = document.getElementById(colLetter + '1');
+    if (label) label.classList.add('shown');
+    for (var r = 2; r <= 5; r++) {
+      var cell = document.getElementById(colLetter + r);
+      if (cell) cell.classList.add('shown');
+    }
+  }
+
+  function selectCell(id) {
+    document.querySelectorAll('#m2-grid td').forEach(function(td) { td.classList.remove('active-cell'); });
+    var cell = document.getElementById(id);
+    if (cell) cell.classList.add('active-cell');
+  }
+
+  function clearCellHighlights() {
+    document.querySelectorAll('#m2-grid td').forEach(function(td) {
+      td.classList.remove('cell-hl-blue', 'cell-hl-red', 'cell-hl-purple', 'cell-hl-green', 'cell-hl-orange');
+    });
+  }
+
+  function highlightCells(mapping) {
+    clearCellHighlights();
+    var keys = Object.keys(mapping);
+    for (var i = 0; i < keys.length; i++) {
+      var cell = document.getElementById(keys[i]);
+      if (cell) cell.classList.add('cell-hl-' + mapping[keys[i]]);
+    }
+  }
+
+  function scrollToColumn(colId) {
+    var sheet = document.querySelector('#m2-excel .excel-sheet');
+    var col = document.getElementById(colId);
+    if (sheet && col) {
+      var colRight = col.offsetLeft + col.offsetWidth + 16;
+      var visibleRight = sheet.scrollLeft + sheet.clientWidth;
+      if (colRight > visibleRight) {
+        sheet.scrollTo({ left: colRight - sheet.clientWidth + 40, behavior: 'smooth' });
+      }
+    }
+  }
+
+  async function run() {
+    // Step 1: Monthly depreciation (col I)
+    await delay(2000);
+    showCol('I'); selectCell('I2'); cellRef.textContent = 'I2';
+    scrollToColumn('I1');
+    highlightCells({ 'F2': 'blue' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=', color: null }, { text: 'F2', color: 'blue' }, { text: '/12', color: null }
+    ], 60);
+    await delay(200);
+    clearCellHighlights();
+    document.getElementById('I2').textContent = '$1,000';
+
+    // Step 2: Months elapsed (col J)
+    await delay(900);
+    showCol('J'); selectCell('J2'); cellRef.textContent = 'J2';
+    scrollToColumn('J1');
+    highlightCells({ 'B2': 'blue' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=DATEDIF(', color: null }, { text: 'B2', color: 'blue' }, { text: ',"2025-09-30","M")', color: null }
+    ], 40);
+    await delay(200);
+    clearCellHighlights();
+    document.getElementById('J2').textContent = '54';
+
+    // Step 3: Convention check (col K)
+    await delay(1200);
+    showCol('K'); selectCell('K2'); cellRef.textContent = 'K2';
+    scrollToColumn('K1');
+    highlightCells({ 'E2m': 'purple' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=IF(', color: null }, { text: 'E2', color: 'purple' }, { text: '="SL/FM",1,0)', color: null }
+    ], 45);
+    await delay(200);
+    clearCellHighlights();
+    document.getElementById('K2').textContent = '1';
+
+    // Step 4: Accumulated — with backspace/correction (col L)
+    await delay(1000);
+    showCol('L'); selectCell('L2'); cellRef.textContent = 'L2';
+    scrollToColumn('L1');
+    // First attempt
+    highlightCells({ 'I2': 'blue', 'J2': 'red', 'K2': 'purple' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=', color: null }, { text: 'I2', color: 'blue' }, { text: '*(', color: null }, { text: 'J2', color: 'red' }, { text: '+', color: null }, { text: 'K2', color: 'purple' }, { text: ')', color: null }
+    ], 50);
+    await delay(700);
+    // Backspace — rethinking
+    clearCellHighlights();
+    await typeBackspace(formulaText, 7, 40);
+    await delay(300);
+    // Second attempt
+    highlightCells({ 'I2': 'blue', 'J2': 'red' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=', color: null }, { text: 'I2', color: 'blue' }, { text: '*', color: null }, { text: 'J2', color: 'red' }
+    ], 50);
+    await delay(600);
+    // Backspace again
+    clearCellHighlights();
+    await typeBackspace(formulaText, 5, 40);
+    await delay(300);
+    // Final version
+    highlightCells({ 'I2': 'blue', 'J2': 'red', 'K2': 'purple' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=', color: null }, { text: 'I2', color: 'blue' }, { text: '*(', color: null }, { text: 'J2', color: 'red' },
+      { text: '-IF(', color: null }, { text: 'K2', color: 'purple' }, { text: '=1,0,1))', color: null }
+    ], 35);
+    await delay(200);
+    clearCellHighlights();
+    document.getElementById('L2').textContent = '$54,000';
+
+    // Step 5: NBV as of September (col M)
+    await delay(800);
+    showCol('M'); selectCell('M2'); cellRef.textContent = 'M2';
+    scrollToColumn('M1');
+    highlightCells({ 'C2': 'blue', 'L2': 'red' });
+    formulaText.innerHTML = '';
+    await typeColorFormula(formulaText, [
+      { text: '=', color: null }, { text: 'C2', color: 'blue' }, { text: '-', color: null }, { text: 'L2', color: 'red' }
+    ], 60);
+    await delay(200);
+    clearCellHighlights();
+    document.getElementById('M2').textContent = '$66,000';
+
+    await delay(1500);
+
+    // Transition: Excel fades → screenshot appears → card floats on top
+    clearCellHighlights();
+    excel.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    excel.style.opacity = '0';
+    excel.style.transform = 'scale(0.97)';
+    await delay(400);
+    excel.style.display = 'none';
+
+    // Screenshot fades in
+    var screenshot = document.getElementById('m2-screenshot');
+    if (screenshot) {
+      screenshot.style.opacity = '1';
+    }
+    await delay(500);
+
+    // Answer card floats in on top of screenshot
+    afterEl.classList.add('visible');
+    await delay(600);
+
+    var m2ReplayWrap = document.getElementById('m2-replay-wrap');
+    if (m2ReplayWrap) m2ReplayWrap.style.visibility = 'visible';
+  }
+
+  run();
+}
+
+// Replay buttons wired immediately (don't need scroll gate)
+var m2Replay = document.getElementById('m2-replay');
+if (m2Replay) m2Replay.addEventListener('click', function() { runMoment2(); });
+var m2ReplayBtn = document.getElementById('m2-replay-btn');
+if (m2ReplayBtn) m2ReplayBtn.addEventListener('click', function() { runMoment2(); });
+
+// ═══════════════════════════════════════
+// MOMENT 3: MONTHLY CLOSE RACE
+// ═══════════════════════════════════════
+function runMoment3() {
+  var timerLeftEl = document.getElementById('m3-timer-left');
+  var timerRightEl = document.getElementById('m3-timer-right');
+  var keystrokesEl = document.getElementById('m3-keystrokes');
+  var clicksEl = document.getElementById('m3-clicks');
+  var balanceBar = document.getElementById('m3-balance');
+  var excelEl = document.getElementById('m3-excel');
+  var periodEl = document.getElementById('m3-period');
+  var genBtn = document.getElementById('m3-gen');
+  var exportBtn = document.getElementById('m3-export');
+  var emptyEl = document.getElementById('m3-empty');
+  var bricksTable = document.getElementById('m3-bricks-table');
+  var bricksBal = document.getElementById('m3-bricks-bal');
+  var doneEl = document.getElementById('m3-done');
+  var toastEl = document.getElementById('m3-toast');
+  var cursorEl = document.getElementById('m3-cursor');
+  var replayBtn = document.getElementById('m3-replay');
+
+  // Reset
+  timerLeftEl.textContent = '0:00';
+  timerLeftEl.classList.remove('stopped', 'running-long');
+  timerRightEl.textContent = '0:00';
+  timerRightEl.classList.remove('stopped');
+  keystrokesEl.textContent = 'Keystrokes: 0';
+  keystrokesEl.classList.remove('hot');
+  clicksEl.textContent = 'Clicks: 0';
+  balanceBar.textContent = '';
+  balanceBar.className = 'm3-balance-bar';
+  excelEl.style.opacity = '1';
+  periodEl.value = '';
+  periodEl.innerHTML = '<option>Select period...</option>';
+  periodEl.classList.remove('clicked');
+  genBtn.classList.remove('pressed');
+  exportBtn.classList.remove('pressed');
+  emptyEl.style.display = '';
+  bricksTable.classList.remove('visible');
+  bricksTable.querySelectorAll('.je-row').forEach(function(r) { r.classList.remove('shown'); });
+  bricksBal.classList.remove('shown');
+  doneEl.classList.remove('shown');
+  toastEl.classList.remove('shown');
+  cursorEl.style.opacity = '0';
+
+  // Reset screenshot + replay
+  var m3Screenshot = document.getElementById('m3-screenshot');
+  if (m3Screenshot) m3Screenshot.style.opacity = '0';
+  var m3ReplayWrap = document.getElementById('m3-replay-wrap');
+  if (m3ReplayWrap) m3ReplayWrap.style.visibility = 'hidden';
+
+  // Reset race panel opacity (was faded out for screenshot transition)
+  var raceEl = document.getElementById('m3-stage');
+  raceEl.querySelectorAll('.m3-race > *:not(.m3-screenshot-after)').forEach(function(p) {
+    p.style.opacity = '';
+    p.style.transition = '';
+  });
+
+  // Clear all Excel cells
+  for (var r = 1; r <= 10; r++) {
+    for (var c = 1; c <= 5; c++) {
+      var cell = document.getElementById('m3-r' + r + 'c' + c);
+      if (cell) { cell.textContent = ''; cell.classList.remove('typing'); }
+    }
+  }
+
+  var keystrokes = 0;
+  var clicks = 0;
+
+  // Two independent timers
+  var leftRunning = false, rightRunning = false;
+  var timerStart = 0;
+  var timerRAF = null;
+
+  function formatTime(seconds) {
+    var mins = Math.floor(seconds / 60);
+    var secs = seconds % 60;
+    return mins + ':' + (secs < 10 ? '0' : '') + secs.toFixed(1);
+  }
+
+  var leftTimeOffset = 0;
+  var lastTickTime = 0;
+
+  function startTimers() {
+    timerStart = performance.now();
+    leftRunning = true;
+    rightRunning = true;
+    leftTimeOffset = 0;
+    lastTickTime = timerStart;
+    function tick() {
+      var now = performance.now();
+      var realElapsed = (now - timerStart) / 1000 * 1.3; // 1.3x base speed
+
+      // Left timer: when bricksDone, each real tick adds 30x the real delta
+      if (leftRunning && bricksDone) {
+        var realDelta = (now - lastTickTime) / 1000;
+        leftTimeOffset += realDelta * 30;
+      }
+      lastTickTime = now;
+
+      var leftElapsed = realElapsed + leftTimeOffset;
+      if (leftRunning) {
+        timerLeftEl.textContent = formatTime(leftElapsed);
+        if (leftElapsed > 15) timerLeftEl.classList.add('running-long');
+      }
+      if (rightRunning) {
+        timerRightEl.textContent = formatTime(realElapsed);
+      }
+      if (leftRunning || rightRunning) {
+        timerRAF = requestAnimationFrame(tick);
+      }
+    }
+    tick();
+  }
+
+  function stopRightTimer() {
+    rightRunning = false;
+    timerRightEl.classList.add('stopped');
+  }
+
+  function stopLeftTimer() {
+    leftRunning = false;
+    if (timerRAF) cancelAnimationFrame(timerRAF);
+  }
+
+  function addKeystroke(n) {
+    keystrokes += (n || 1);
+    keystrokesEl.textContent = 'Keystrokes: ' + keystrokes;
+    if (keystrokes > 60) keystrokesEl.classList.add('hot');
+  }
+
+  function addClick() {
+    clicks++;
+    clicksEl.textContent = 'Clicks: ' + clicks;
+  }
+
+  // Paste into a cell — appears instantly (Ctrl+V)
+  function pasteInCell(cellId, text) {
+    var cell = document.getElementById(cellId);
+    if (!cell) return;
+    document.querySelectorAll('#m3-grid td.typing').forEach(function(td) { td.classList.remove('typing'); });
+    cell.classList.add('typing');
+    cell.textContent = text;
+    addKeystroke(2); // Ctrl+V = 2 keystrokes
+  }
+
+  // Move cursor on right panel
+  function moveBricksCursor(el, dur) {
+    return new Promise(function(resolve) {
+      var panel = document.querySelector('.m3-panel-right');
+      var panelRect = panel.getBoundingClientRect();
+      var elRect = el.getBoundingClientRect();
+      var x = elRect.left - panelRect.left + elRect.width / 2;
+      var y = elRect.top - panelRect.top + elRect.height / 2;
+      cursorEl.style.transition = 'left ' + dur + 'ms ease, top ' + dur + 'ms ease';
+      cursorEl.style.left = x + 'px';
+      cursorEl.style.top = y + 'px';
+      setTimeout(resolve, dur);
+    });
+  }
+
+  var bricksDone = false;
+  // Speed-aware delay: once Bricks side finishes, left side accelerates
+  function leftDelay(normal) {
+    return delay(bricksDone ? Math.min(normal, 30) : normal);
+  }
+
+  async function runLeft() {
+    // Entity 1: HQ — debit
+    await leftDelay(500);
+    pasteInCell('m3-r1c1', 'HQ');
+    await leftDelay(150);
+    pasteInCell('m3-r1c2', '6100');
+    await leftDelay(150);
+    pasteInCell('m3-r1c3', 'Depreciation Expense');
+    await leftDelay(1000);
+    pasteInCell('m3-r1c4', '$5,003.74');
+    await leftDelay(300);
+
+    // Entity 1: HQ — credit
+    pasteInCell('m3-r2c1', 'HQ');
+    await leftDelay(150);
+    pasteInCell('m3-r2c2', '1700');
+    await leftDelay(150);
+    pasteInCell('m3-r2c3', 'Accumulated Depreciation');
+    await leftDelay(200);
+    pasteInCell('m3-r2c5', '$5,003.74');
+
+    balanceBar.innerHTML = '&#10003; Balanced &nbsp;|&nbsp; 1 of 5 entities';
+    balanceBar.className = 'm3-balance-bar partial';
+    await leftDelay(600);
+
+    // Entity 2: Assisted Living — debit
+    pasteInCell('m3-r3c1', 'Assisted Living');
+    await leftDelay(150);
+    pasteInCell('m3-r3c2', '6100');
+    await leftDelay(150);
+    pasteInCell('m3-r3c3', 'Depr Expense');
+    await leftDelay(1200);
+    pasteInCell('m3-r3c4', '$27,570.57');
+    await leftDelay(300);
+
+    // Entity 2: credit
+    pasteInCell('m3-r4c1', 'Assisted Living');
+    await leftDelay(150);
+    pasteInCell('m3-r4c2', '1700');
+    await leftDelay(150);
+    pasteInCell('m3-r4c3', 'Accum Depr');
+    await leftDelay(200);
+    pasteInCell('m3-r4c5', '$27,570.57');
+
+    balanceBar.innerHTML = '&#10003; Balanced &nbsp;|&nbsp; 2 of 5 entities';
+    await leftDelay(600);
+
+    // Entity 3: Indep. Living — debit
+    pasteInCell('m3-r5c1', 'Indep. Living');
+    await leftDelay(150);
+    pasteInCell('m3-r5c2', '6100');
+    await leftDelay(150);
+    pasteInCell('m3-r5c3', 'Depr Expense');
+    await leftDelay(1100);
+    pasteInCell('m3-r5c4', '$24,533.86');
+    await leftDelay(300);
+
+    // Entity 3: credit
+    pasteInCell('m3-r6c1', 'Indep. Living');
+    await leftDelay(150);
+    pasteInCell('m3-r6c2', '1700');
+    await leftDelay(150);
+    pasteInCell('m3-r6c3', 'Accum Depr');
+    await leftDelay(200);
+    pasteInCell('m3-r6c5', '$24,533.86');
+
+    balanceBar.innerHTML = '&#10003; Balanced &nbsp;|&nbsp; 3 of 5 entities';
+    await leftDelay(600);
+
+    // Entity 4: Main Campus — debit
+    pasteInCell('m3-r7c1', 'Main Campus');
+    await leftDelay(150);
+    pasteInCell('m3-r7c2', '6100');
+    await leftDelay(150);
+    pasteInCell('m3-r7c3', 'Depr Expense');
+    await leftDelay(1000);
+    pasteInCell('m3-r7c4', '$18,446.53');
+    await leftDelay(300);
+
+    // Entity 4: credit — STALE CLIPBOARD
+    pasteInCell('m3-r8c1', 'Main Campus');
+    await leftDelay(150);
+    pasteInCell('m3-r8c2', '1700');
+    await leftDelay(150);
+    pasteInCell('m3-r8c3', 'Accum Depr');
+    await leftDelay(200);
+    pasteInCell('m3-r8c5', '$24,533.86'); // WRONG — stale clipboard
+
+    // Out of balance
+    balanceBar.innerHTML = '&#9888; Debits: $75,554.70 &nbsp;|&nbsp; Credits: $81,641.03 &nbsp;|&nbsp; <strong>Out of balance: $6,087.33</strong>';
+    balanceBar.className = 'm3-balance-bar error';
+    await leftDelay(1000);
+
+    // Scanning the rows...
+    await leftDelay(1200);
+
+    // Found it — fix row 8 credit
+    var wrongCell = document.getElementById('m3-r8c5');
+    wrongCell.classList.add('typing');
+    await leftDelay(400);
+    await leftDelay(500);
+    wrongCell.textContent = '$18,446.53';
+    addKeystroke(2);
+    await leftDelay(300);
+    balanceBar.innerHTML = '&#10003; Balanced &nbsp;|&nbsp; 4 of 5 entities';
+    balanceBar.className = 'm3-balance-bar partial';
+    await leftDelay(600);
+
+    // Entity 5: Memory Care — debit
+    pasteInCell('m3-r9c1', 'Memory Care');
+    await leftDelay(150);
+    pasteInCell('m3-r9c2', '6100');
+    await leftDelay(150);
+    pasteInCell('m3-r9c3', 'Depr Expense');
+    await leftDelay(1100);
+    pasteInCell('m3-r9c4', '$2,917.19');
+    await leftDelay(300);
+
+    // Entity 5: credit
+    pasteInCell('m3-r10c1', 'Memory Care');
+    await leftDelay(150);
+    pasteInCell('m3-r10c2', '1700');
+    await leftDelay(150);
+    pasteInCell('m3-r10c3', 'Accum Depr');
+    await leftDelay(200);
+    pasteInCell('m3-r10c5', '$2,917.19');
+
+    balanceBar.innerHTML = '&#10003; Balanced &nbsp;|&nbsp; 5 of 5 entities &nbsp;|&nbsp; Total: $78,471.89';
+    balanceBar.className = 'm3-balance-bar balanced';
+    stopLeftTimer();
+  }
+
+  async function runRight() {
+    await delay(800);
+
+    // Show cursor
+    cursorEl.style.transition = 'none';
+    cursorEl.style.left = '60px';
+    cursorEl.style.top = '80px';
+    cursorEl.style.opacity = '1';
+    await delay(300);
+
+    // Period already selected — just click Generate
+    periodEl.innerHTML = '<option>March 2026</option>';
+    periodEl.selectedIndex = 0;
+    await delay(200);
+
+    // Click 1: Generate
+    await moveBricksCursor(genBtn, 300);
+    await delay(200);
+    genBtn.classList.add('pressed');
+    addClick();
+    await delay(150);
+    genBtn.classList.remove('pressed');
+    await delay(200);
+
+    // Table appears instantly
+    emptyEl.style.display = 'none';
+    bricksTable.classList.add('visible');
+    bricksTable.querySelectorAll('.je-row').forEach(function(r) { r.classList.add('shown'); });
+    bricksBal.classList.add('shown');
+    await delay(400);
+
+    // Click 3: Export
+    await moveBricksCursor(exportBtn, 350);
+    await delay(200);
+    exportBtn.classList.add('pressed');
+    addClick();
+    await delay(150);
+    exportBtn.classList.remove('pressed');
+    toastEl.classList.add('shown');
+    await delay(1200);
+    toastEl.classList.remove('shown');
+
+    // Done!
+    doneEl.classList.add('shown');
+    stopRightTimer();
+    bricksDone = true; // Signal left side to speed up
+
+    // Fade cursor
+    cursorEl.style.transition = 'opacity 0.3s ease';
+    cursorEl.style.opacity = '0';
+  }
+
+  // Start both simultaneously, then show screenshot
+  startTimers();
+  Promise.all([runLeft(), runRight()]).then(function() {
+    return delay(500);
+  }).then(function() {
+    // Fade the race, show the real product
+    var raceEl = document.getElementById('m3-stage');
+    var panels = raceEl.querySelectorAll('.m3-race > *:not(.m3-screenshot-after)');
+    panels.forEach(function(p) {
+      p.style.transition = 'opacity 0.5s ease';
+      p.style.opacity = '0';
+    });
+    return delay(500);
+  }).then(function() {
+    var screenshotEl = document.getElementById('m3-screenshot');
+    if (screenshotEl) screenshotEl.style.opacity = '1';
+    return delay(600);
+  }).then(function() {
+    var m3ReplayWrap = document.getElementById('m3-replay-wrap');
+    if (m3ReplayWrap) m3ReplayWrap.style.visibility = 'visible';
+  });
+}
+
+var m3Replay = document.getElementById('m3-replay');
+if (m3Replay) m3Replay.addEventListener('click', function() { runMoment3(); });
+var m3ReplayBtn = document.getElementById('m3-replay-btn');
+if (m3ReplayBtn) m3ReplayBtn.addEventListener('click', function() { runMoment3(); });
+
+// ═══ STATUS BAR ═══
+// Order: AVERAGE, COUNT, SUM (matching Excel's right-side status bar)
+var sections = [
+  { el: '.hero', text: ['AVERAGE: minutes to close', 'COUNT: 58K assets', 'SUM: $600/yr'] },
+  { el: '.moments', text: ['AVERAGE: 3 clicks to close', 'COUNT: 10+ methods', 'SUM: Book + Tax + AMT + State'] },
+  { el: '.proof', text: ['AVERAGE: spot on', 'COUNT: controllers & CPAs', 'SUM: no-brainer'] },
+  { el: '.pricing', text: ['AVERAGE: $0/asset', 'COUNT: unlimited entities', 'SUM: $600/yr'] },
+  { el: '.switching', text: ['AVERAGE: before next close', 'COUNT: any format', 'SUM: $0 until live'] },
+];
+function updateStatus() {
+  var bar = document.getElementById('statusBar');
+  if (!bar || bar.style.display === 'none') return;
+  var items = bar.querySelectorAll('.sb-right .sb-item');
+  var scrollY = window.scrollY + window.innerHeight * 0.5;
+  for (var i = sections.length - 1; i >= 0; i--) {
+    var el = document.querySelector(sections[i].el);
+    if (el && scrollY >= el.offsetTop) {
+      sections[i].text.forEach(function(t, j) { if (items[j]) items[j].innerHTML = t; });
+      break;
+    }
+  }
+}
+window.addEventListener('scroll', updateStatus, { passive: true });
+updateStatus();
+
+// ═══ CTA CLICK TRACKING ═══
+document.querySelectorAll('[data-track-cta]').forEach(function(el) {
+  el.addEventListener('click', function() {
+    if (typeof gtag === 'function') gtag('event', el.dataset.trackCta, { page: window.location.pathname });
+  });
+});
+
+// ═══ SCROLL DEPTH ═══
+(function() {
+  var thresholds = [25, 50, 75, 100];
+  var fired = {};
+  window.addEventListener('scroll', function() {
+    var pct = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+    thresholds.forEach(function(t) {
+      if (pct >= t && !fired[t]) {
+        fired[t] = true;
+        if (typeof gtag === 'function') gtag('event', 'scroll_' + t, { page: window.location.pathname });
+      }
+    });
+  }, { passive: true });
+})();
+
+// ═══ TIME ON PAGE ═══
+setTimeout(function() {
+  if (typeof gtag === 'function') gtag('event', 'page_engaged', { page: window.location.pathname, time_seconds: 60 });
+}, 60000);
+
+// ═══ MOMENT 1: FILE GRAVEYARD ANIMATION ═══
+function delay(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+function runMoment1() {
+  var stage = document.getElementById('m1-stage');
+  var explorer = document.getElementById('m1-explorer');
+  var fileList = document.getElementById('m1-file-list');
+  var rows = fileList.querySelectorAll('.win-file-row');
+  var cursor = document.getElementById('m1-cursor');
+  var selectRect = document.getElementById('m1-select-rect');
+  var dragGhost = document.getElementById('m1-drag-ghost');
+  var dialog = document.getElementById('m1-dialog');
+  var dialogYes = document.getElementById('m1-dialog-yes');
+  var dropTarget = document.getElementById('m1-drop-target');
+  var appIcon = document.getElementById('m1-app-icon');
+  var importZone = document.getElementById('m1-import-zone');
+  var importBar = document.getElementById('m1-import-bar');
+  var importFill = document.getElementById('m1-import-fill');
+  var importStatus = document.getElementById('m1-import-status');
+  var afterEl = document.getElementById('m1-after');
+  var replayBtn = document.getElementById('m1-replay');
+
+  // Reset everything
+  explorer.style.opacity = '1';
+  explorer.style.transform = 'none';
+  explorer.style.transition = 'none';
+  explorer.style.display = '';
+  afterEl.classList.remove('visible');
+  afterEl.style.display = 'none';
+  rows.forEach(function(r) { r.classList.remove('selected', 'drop-in'); r.classList.add('hidden-row'); r.style.opacity = ''; r.style.transform = ''; });
+  document.getElementById('m1-item-count').textContent = '0 files';
+  cursor.style.opacity = '0';
+  cursor.style.transition = 'none';
+  selectRect.style.opacity = '0';
+  dragGhost.style.opacity = '0';
+  dragGhost.style.transform = '';
+  dialog.classList.remove('visible');
+  dialogYes.classList.remove('clicked');
+  appIcon.classList.remove('hover', 'opening');
+  importZone.classList.remove('open');
+  importZone.style.opacity = '';
+  importZone.style.display = '';
+  dropTarget.style.opacity = '';
+  dropTarget.style.display = '';
+  importBar.classList.remove('active');
+  importFill.classList.remove('running');
+  importFill.style.transition = 'none';
+  importFill.style.width = '0%';
+  importFill.getBoundingClientRect();
+  importFill.style.transition = '';
+  importStatus.classList.remove('active');
+  var replayWrap = document.getElementById('m1-replay-wrap');
+  if (replayWrap) replayWrap.style.visibility = 'hidden';
+  dropTarget.style.opacity = '1';
+
+  // Fresh rect on every call — immune to scroll during animation
+  function getStageRect() { return stage.getBoundingClientRect(); }
+
+  function moveCursor(x, y, dur) {
+    return new Promise(function(resolve) {
+      cursor.style.transition = 'left ' + dur + 'ms ease, top ' + dur + 'ms ease';
+      cursor.style.left = x + 'px';
+      cursor.style.top = y + 'px';
+      setTimeout(resolve, dur);
+    });
+  }
+
+  async function run() {
+    // Phase 1: Files drop in one by one
+    rows.forEach(function(r) { r.classList.add('hidden-row'); });
+    await delay(400);
+
+    var dropDelays = [0, 800, 1500, 2100, 2600, 3000, 3300, 3500, 3900, 4200, 4400, 4550];
+    var fileListEl = document.getElementById('m1-file-list');
+    fileListEl.style.overflowY = 'hidden';
+    fileListEl.scrollTop = 0;
+
+    var itemCountEl = document.getElementById('m1-item-count');
+    rows.forEach(function(r, i) {
+      setTimeout(function() {
+        r.classList.remove('hidden-row');
+        r.classList.add('drop-in');
+        itemCountEl.textContent = (i + 1) + ' file' + (i === 0 ? '' : 's');
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            if (fileListEl.scrollHeight > fileListEl.clientHeight + 2) {
+              fileListEl.style.overflowY = 'auto';
+              fileListEl.scrollTo({ top: fileListEl.scrollHeight, behavior: 'smooth' });
+            }
+          });
+        });
+      }, dropDelays[i]);
+    });
+
+    await delay(4550 + 1800);
+
+    // Phase 2: Cursor appears, draws selection rectangle
+    var sr = getStageRect();
+    var firstRow = rows[0].getBoundingClientRect();
+    var lastRow = rows[rows.length - 1].getBoundingClientRect();
+    var startX = firstRow.left - sr.left - 8;
+    var startY = firstRow.top - sr.top - 6;
+    var endX = firstRow.right - sr.left + 8;
+    var endY = lastRow.bottom - sr.top + 6;
+    var totalHeight = endY - startY;
+    var dragDuration = 900;
+
+    cursor.style.transition = 'none';
+    cursor.style.left = startX + 'px';
+    cursor.style.top = startY + 'px';
+    cursor.style.opacity = '1';
+    await delay(300);
+
+    selectRect.style.transition = 'none';
+    selectRect.style.left = startX + 'px';
+    selectRect.style.top = startY + 'px';
+    selectRect.style.width = '0px';
+    selectRect.style.height = '0px';
+    selectRect.style.opacity = '1';
+
+    var rowThresholds = [];
+    rows.forEach(function(r) {
+      var rRect = r.getBoundingClientRect();
+      var rowMid = rRect.top + rRect.height / 2 - sr.top;
+      rowThresholds.push(rowMid - startY);
+    });
+
+    var startTime = performance.now();
+    await new Promise(function(resolve) {
+      function tick(now) {
+        var elapsed = now - startTime;
+        var progress = Math.min(elapsed / dragDuration, 1);
+        var eased = 1 - Math.pow(1 - progress, 2);
+
+        var currentHeight = eased * totalHeight;
+        var currentWidth = eased * (endX - startX);
+
+        selectRect.style.width = currentWidth + 'px';
+        selectRect.style.height = currentHeight + 'px';
+
+        cursor.style.left = (startX + currentWidth) + 'px';
+        cursor.style.top = (startY + currentHeight) + 'px';
+
+        rows.forEach(function(r, i) {
+          if (currentHeight >= rowThresholds[i] && !r.classList.contains('selected')) {
+            r.classList.add('selected');
+          }
+        });
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          resolve();
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+
+    await delay(300);
+
+    selectRect.style.transition = 'opacity 0.2s ease';
+    selectRect.style.opacity = '0';
+    await delay(250);
+
+    // Phase 3: Drag toward Bricks icon
+    var cursorX = endX;
+    var cursorY = endY;
+    dragGhost.style.transition = 'none';
+    dragGhost.style.left = (cursorX + 8) + 'px';
+    dragGhost.style.top = (cursorY + 8) + 'px';
+    dragGhost.style.opacity = '1';
+
+    await delay(250);
+
+    var sr2 = getStageRect();
+    var iconRect = appIcon.getBoundingClientRect();
+    var targetX = iconRect.left - sr2.left + iconRect.width / 2;
+    var targetY = iconRect.top - sr2.top + iconRect.height / 2;
+
+    dragGhost.style.transition = 'left 1.1s ease-in-out, top 1.1s ease-in-out';
+    dragGhost.style.left = (targetX - 50) + 'px';
+    dragGhost.style.top = (targetY + 20) + 'px';
+    await moveCursor(targetX, targetY, 1100);
+
+    // Phase 4: Hover over icon
+    appIcon.classList.add('hover');
+    await delay(600);
+
+    appIcon.classList.add('opening');
+    await delay(800);
+    appIcon.classList.remove('opening');
+
+    importZone.classList.add('open');
+    await delay(500);
+
+    // Phase 5: Drop files into import zone
+    var sr3 = getStageRect();
+    var zoneRect = importZone.getBoundingClientRect();
+    var zoneCenterX = zoneRect.left - sr3.left + zoneRect.width / 2;
+    var zoneCenterY = zoneRect.top - sr3.top + zoneRect.height * 0.4;
+
+    dragGhost.style.transition = 'left 0.6s ease-in-out, top 0.6s ease-in-out';
+    dragGhost.style.left = (zoneCenterX - 50) + 'px';
+    dragGhost.style.top = (zoneCenterY) + 'px';
+    await moveCursor(zoneCenterX, zoneCenterY + 10, 600);
+    await delay(200);
+
+    dragGhost.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+    dragGhost.style.opacity = '0';
+    dragGhost.style.transform = 'scale(0.9)';
+    await delay(300);
+
+    // Phase 6: Dialog pops — cursor clicks the button
+    cursor.style.transition = 'opacity 0.2s ease';
+    cursor.style.opacity = '0';
+    dialog.classList.add('visible');
+    await delay(1200);
+
+    // Get fresh coordinates (layout may have shifted during animation)
+    var sr4 = getStageRect();
+    var btnRect = dialogYes.getBoundingClientRect();
+    var btnCenterX = btnRect.left - sr4.left + btnRect.width / 2;
+    var btnCenterY = btnRect.top - sr4.top + btnRect.height / 2;
+
+    // Cursor reappears offset from the button, then glides to it
+    cursor.style.transition = 'none';
+    cursor.style.left = (btnCenterX + 50) + 'px';
+    cursor.style.top = (btnCenterY + 40) + 'px';
+    cursor.style.opacity = '1';
+    await delay(150);
+    cursor.style.transition = 'left 0.5s ease, top 0.5s ease';
+    cursor.style.left = btnCenterX + 'px';
+    cursor.style.top = btnCenterY + 'px';
+    await delay(550);
+
+    // Click the button
+    dialogYes.classList.add('clicked');
+    await delay(200);
+    dialogYes.classList.remove('clicked');
+    cursor.style.transition = 'opacity 0.2s ease';
+    cursor.style.opacity = '0';
+    await delay(300);
+    dialog.classList.remove('visible');
+    await delay(300);
+
+    // Phase 7: Import progress
+    appIcon.classList.remove('hover');
+    importBar.classList.add('active');
+    importStatus.classList.add('active');
+    importFill.style.width = '0%';
+    importFill.getBoundingClientRect();
+    importFill.classList.add('running');
+    importFill.style.width = '';
+    await delay(1200);
+
+    // Phase 8: Reveal screenshot — takes over the full stage
+    explorer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    explorer.style.opacity = '0';
+    explorer.style.transform = 'scale(0.97)';
+    dropTarget.style.transition = 'opacity 0.4s ease';
+    dropTarget.style.opacity = '0';
+    importZone.style.transition = 'opacity 0.4s ease';
+    importZone.style.opacity = '0';
+    await delay(450);
+    explorer.style.display = 'none';
+    dropTarget.style.display = 'none';
+    importZone.style.display = 'none';
+    // Screenshot fills the stage
+    afterEl.style.display = '';
+    afterEl.style.maxWidth = '100%';
+    afterEl.classList.add('visible');
+    await delay(600);
+
+    var replayWrap = document.getElementById('m1-replay-wrap');
+    if (replayWrap) replayWrap.style.visibility = 'visible';
+  }
+
+  run();
+}
+
+var m1Replay = document.getElementById('m1-replay');
+if (m1Replay) m1Replay.addEventListener('click', function() { runMoment1(); });
+
+// ═══ ANIMATION OBSERVERS — DEFERRED UNTIL FIRST SCROLL ═══
+// On large screens, animation stages may be in the viewport on load.
+// We don't want them firing before the user engages. Create the
+// IntersectionObservers only after the first scroll event.
+(function() {
+  var observersCreated = false;
+  function createMomentObservers() {
+    if (observersCreated) return;
+    observersCreated = true;
+    var opts = { threshold: 0.15, rootMargin: '0px 0px -150px 0px' };
+
+    // Moment 1
+    var m1 = document.getElementById('m1-stage');
+    if (m1) {
+      var m1played = false;
+      new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting && !m1played) { m1played = true; runMoment1(); } });
+      }, opts).observe(m1);
+    }
+
+    // Moment 2
+    var m2 = document.getElementById('m2-stage');
+    if (m2) {
+      var m2played = false;
+      new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting && !m2played) { m2played = true; runMoment2(); } });
+      }, opts).observe(m2);
+    }
+
+    // Moment 3
+    var m3 = document.getElementById('m3-stage');
+    if (m3) {
+      var m3played = false;
+      new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting && !m3played) { m3played = true; runMoment3(); } });
+      }, opts).observe(m3);
+    }
+  }
+
+  window.addEventListener('scroll', function onFirstScroll() {
+    window.removeEventListener('scroll', onFirstScroll);
+    createMomentObservers();
+  }, { passive: true });
+})();
+
+// ═══ UTM PASSTHROUGH ═══
+document.addEventListener('DOMContentLoaded', function() {
+  var params = new URLSearchParams(window.location.search);
+  var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'];
+  var utmString = utmKeys.filter(function(k) { return params.get(k); }).map(function(k) { return k + '=' + params.get(k); }).join('&');
+  if (utmString) {
+    document.querySelectorAll('.meetings-iframe-container').forEach(function(el) {
+      var src = el.getAttribute('data-src');
+      if (src) el.setAttribute('data-src', src + '&' + utmString);
+    });
+  }
+});
+
+// ═══ IMPORT DROP EASTER EGG ═══
+// If someone actually drops a file on the mock import zone, they're serious.
+// Capture file info, fire GA4 event, show a response, and open the booking modal.
+(function() {
+  var zone = document.getElementById('mockDropZone');
+  if (!zone) return;
+
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    zone.style.borderColor = 'var(--accent)';
+    zone.style.background = 'rgba(200,120,95,0.08)';
+  });
+  zone.addEventListener('dragleave', function() {
+    zone.style.borderColor = '';
+    zone.style.background = '';
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    zone.style.background = '';
+
+    var files = e.dataTransfer ? e.dataTransfer.files : [];
+    var fileNames = [];
+    var totalSize = 0;
+    for (var i = 0; i < files.length; i++) {
+      fileNames.push(files[i].name);
+      totalSize += files[i].size;
+    }
+
+    // Fire GA4 event with file details — this is a high-intent signal
+    if (typeof gtag === 'function') {
+      gtag('event', 'import_file_dropped', {
+        page: window.location.pathname,
+        file_count: files.length,
+        file_names: fileNames.join(', '),
+        total_size_kb: Math.round(totalSize / 1024)
+      });
+    }
+
+    // Update the drop zone to acknowledge
+    var icon = document.getElementById('mockDropIcon');
+    var text = document.getElementById('mockDropText');
+    var formats = document.getElementById('mockDropFormats');
+    var desc = document.getElementById('mockDropDesc');
+    if (icon) icon.textContent = '✓';
+    if (text) text.innerHTML = '<strong>' + fileNames[0] + '</strong>' + (files.length > 1 ? ' + ' + (files.length - 1) + ' more' : '');
+    if (formats) formats.style.display = 'none';
+    if (desc) {
+      desc.style.color = 'var(--accent)';
+      desc.innerHTML = 'We see you\'re ready. Let\'s get your data loaded — book a quick walkthrough and we\'ll import this live.';
+    }
+
+    // Open the booking modal after a brief pause
+    setTimeout(function() { openModal(); }, 2000);
+  });
+})();
+
+// ═══ SWITCHING DROP ZONE ═══
+(function() {
+  var zone = document.getElementById('switchDropZone');
+  if (!zone) return;
+
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    zone.style.borderColor = 'var(--accent)';
+    zone.style.background = 'rgba(200,120,95,0.04)';
+  });
+  zone.addEventListener('dragleave', function() {
+    zone.style.borderColor = '';
+    zone.style.background = '';
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    zone.style.borderColor = '';
+    zone.style.background = '';
+
+    var files = e.dataTransfer ? e.dataTransfer.files : [];
+    var fileNames = [];
+    var totalSize = 0;
+    for (var i = 0; i < files.length; i++) {
+      fileNames.push(files[i].name);
+      totalSize += files[i].size;
+    }
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'switching_file_dropped', {
+        page: window.location.pathname,
+        file_count: files.length,
+        file_names: fileNames.join(', '),
+        total_size_kb: Math.round(totalSize / 1024)
+      });
+    }
+
+    zone.innerHTML = '<div style="font-size:24px;color:var(--accent);margin-bottom:12px">✓</div>' +
+      '<div style="font-size:16px;font-weight:500;color:var(--ink);margin-bottom:6px">' + fileNames[0] + (files.length > 1 ? ' + ' + (files.length - 1) + ' more' : '') + '</div>' +
+      '<div style="font-size:14px;color:var(--accent);margin-top:12px">We see you\'re ready. Let\'s get your data loaded.</div>';
+
+    setTimeout(function() { openModal(); }, 2000);
+  });
+})();
+</script>
+
 </body>
 </html>
