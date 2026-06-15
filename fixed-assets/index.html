@@ -1392,19 +1392,29 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 </div>
 
 <script>
-// ═══ HUBSPOT PRELOAD ═══
-// Load HubSpot Meetings script after page load so modal opens instantly
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    var s = document.createElement('script');
-    s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
-    document.body.appendChild(s);
-  }, 1500); // 1.5s after load — doesn't compete with initial render
+// ═══ HUBSPOT MEETINGS EMBED (load-on-intent, guaranteed before modal) ═══
+// Load the HubSpot Meetings script once. Warmed on the first sign of
+// engagement (keeps initial render fast) and guaranteed at modal open, so the
+// calendar is never blank when someone clicks "Book".
+var _meetingsEmbedLoaded = false;
+function ensureMeetingsEmbed() {
+  if (_meetingsEmbedLoaded) return;
+  _meetingsEmbedLoaded = true;
+  var s = document.createElement('script');
+  s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+  document.body.appendChild(s);
+}
+// Warm the embed on the first interaction (scroll, pointer, tap, or key).
+['pointerdown', 'keydown', 'scroll', 'mousemove', 'touchstart'].forEach(function(evt) {
+  window.addEventListener(evt, ensureMeetingsEmbed, { once: true, passive: true });
 });
+// Fallback: warm shortly after load even with zero interaction.
+window.addEventListener('load', function() { setTimeout(ensureMeetingsEmbed, 2500); });
 
 // ═══ MODAL ═══
 function openModal(e) {
   if (e) e.preventDefault();
+  ensureMeetingsEmbed(); // guarantee the calendar is loading before the modal shows
   document.getElementById('modal').classList.add('active');
   document.body.style.overflow = 'hidden';
   if (typeof gtag === 'function') gtag('event', 'modal_open', { page: window.location.pathname });
