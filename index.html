@@ -32,6 +32,17 @@
 </script>
 <!-- HubSpot tracking pixel — required for CRM lead attribution on demo bookings -->
 <script type="text/javascript" id="hs-script-loader" async defer src="https://js.hs-scripts.com/22027049.js"></script>
+<!-- PostHog — analytics + session replay; same "Bricks App" project (144635) as withbricks.com.
+     Filter by site_env='go' to see only this landing surface. -->
+<link rel="preconnect" href="https://us.i.posthog.com" crossorigin>
+<script>
+(function(){
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister opt_in_capturing opt_out_capturing identify set_config".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_Jv2BW9yG5CMOpcvEKrvwKQAaD4VBcEPiCNpTWGmq8Xu',{api_host:'https://us.i.posthog.com',defaults:'2025-05-24'});
+  posthog.register({site_env:'go'});
+})();
+</script>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1364,9 +1375,12 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 <!-- Social proof line -->
 <div class="social-line">Used by controllers, accountants, CFOs, and CPAs across manufacturing, healthcare, senior living, and professional services.</div>
 
+<!-- Bridge to the product page — this landing page is no longer an island -->
+<div class="social-line" style="padding-top:0"><a href="https://withbricks.com/fixed-assets?utm_source=go.withbricks.com&utm_medium=landing" data-track-cta="outbound_fixed_assets_page" style="color:var(--accent);text-decoration:none;font-weight:500">Want the full product tour first? See Bricks Assets on withbricks.com →</a></div>
+
 <footer>
   <span>© 2026 Bricks. All rights reserved.</span>
-  <span><a href="https://withbricks.com/privacy" style="color:var(--light);text-decoration:none">Privacy</a> · Fixed asset depreciation software</span>
+  <span><a href="https://withbricks.com/privacy" style="color:var(--light);text-decoration:none">Privacy</a> · <a href="https://withbricks.com/fixed-assets?utm_source=go.withbricks.com&utm_medium=landing" data-track-cta="outbound_fixed_assets_footer" style="color:var(--light);text-decoration:none">Fixed asset depreciation software</a></span>
 </footer>
 
 <!-- BOOKING MODAL -->
