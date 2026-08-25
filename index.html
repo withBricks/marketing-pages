@@ -1458,6 +1458,22 @@ window.addEventListener('message', function(e) {
       // GA4 event — must match the GA4 event name linked to Google Ads conversion
       gtag('event', 'conversion_event_book_appointment', { page: window.location.pathname });
     }
+    // PostHog — same demo_booked event as withbricks.com/demo, plus identify:
+    // HubSpot's success message carries the contact, so the PostHog person (and
+    // their session replay) gets a real name/email instead of an anonymous ID.
+    if (window.posthog) {
+      var contact = data.meetingsPayload && data.meetingsPayload.bookingResponse &&
+                    data.meetingsPayload.bookingResponse.postResponse &&
+                    data.meetingsPayload.bookingResponse.postResponse.contact;
+      if (contact && contact.email) {
+        posthog.identify(contact.email, {
+          email: contact.email,
+          first_name: contact.firstName || '',
+          last_name: contact.lastName || ''
+        });
+      }
+      posthog.capture('demo_booked', { source_page: location.pathname + location.search });
+    }
   }
 });
 
