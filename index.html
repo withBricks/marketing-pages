@@ -665,6 +665,19 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 
 <div class="window-frame" style="padding-top:32px;">
 
+<!-- Bricks nav — hidden until the window chrome is dismissed (dismissChrome reveals it),
+     so closing the ✕ never strands the visitor without the brand link + booking CTA -->
+<nav id="bricksNav" style="display:none">
+  <a class="logo" href="https://withbricks.com?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_nav_logo" target="_blank" rel="noopener" data-track-cta="outbound_nav_logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit">
+    <svg width="16" height="18" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
+    <span>Bricks</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:24px">
+    <a class="nav-link" href="https://withbricks.com/fixed-assets?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_nav_link" target="_blank" rel="noopener" data-track-cta="outbound_nav_product">withbricks.com →</a>
+    <a href="#" class="cta" style="padding:10px 20px;font-size:13px" data-track-cta="cta_click_nav" onclick="openModal(event)">See it in action →</a>
+  </div>
+</nav>
+
 <!-- Mobile brand row — the chrome bar (and its logo link) is display:none under 900px -->
 <a class="mobile-brand" href="https://withbricks.com?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_mobile_brand" target="_blank" rel="noopener" data-track-cta="outbound_mobile_brand">
   <svg width="16" height="18" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
@@ -672,7 +685,7 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
   <span class="mb-domain">withbricks.com →</span>
 </a>
 
-<!-- Nav removed — chrome bar serves as nav -->
+<!-- Chrome bar serves as nav while it's visible; #bricksNav takes over on dismiss -->
 
 <!-- ═══ S1: HERO ═══ -->
 <section class="hero">
@@ -1528,6 +1541,12 @@ function dismissChrome() {
   if (chrome) { chrome.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; chrome.style.opacity = '0'; chrome.style.transform = 'translateY(-100%)'; setTimeout(function(){ chrome.style.display = 'none'; }, 300); }
   if (status) { status.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; status.style.opacity = '0'; status.style.transform = 'translateY(100%)'; setTimeout(function(){ status.style.display = 'none'; }, 300); }
   if (frame) { frame.style.transition = 'padding-top 0.3s ease, margin-bottom 0.3s ease'; frame.style.paddingTop = '0'; frame.style.marginBottom = '0'; }
+  var nav = document.getElementById('bricksNav');
+  if (nav) {
+    nav.style.opacity = '0';
+    nav.style.display = 'flex';
+    setTimeout(function(){ nav.style.transition = 'opacity 0.3s ease'; nav.style.opacity = '1'; }, 300);
+  }
 }
 
 // ═══ SCROLL REVEAL ═══
