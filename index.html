@@ -116,6 +116,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);ove
 .win-chrome-left{display:flex;align-items:center;gap:8px}
 .win-chrome-logo{width:14px;height:16px;flex-shrink:0}
 .win-chrome-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid)}
+.mobile-brand{display:none}
+.mobile-brand .mb-name{font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.mobile-brand .mb-domain{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid)}
 .win-chrome-right{display:flex;align-items:center;gap:0}
 .win-chrome-cta{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;color:var(--accent);background:none;border:none;cursor:pointer;padding:4px 12px;border-radius:2px;transition:background 0.1s}
 .win-chrome-cta:hover{background:rgba(200,120,95,0.08)}
@@ -584,6 +587,7 @@ footer{max-width:1120px;margin:0 auto;padding:20px 40px 48px;border-top:1px soli
 .status-bar{display:none}
 .win-chrome{display:none}
 .window-frame{margin-bottom:0}
+.mobile-brand{display:flex;align-items:center;gap:8px;padding:20px 20px 0;text-decoration:none}
 }
 @media(max-width:600px){
 nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.final-cta,.faq,.divider,.social-line,footer{padding-left:20px;padding-right:20px}
@@ -646,8 +650,10 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 <!-- Windows chrome -->
 <div class="win-chrome" id="winChrome">
   <div class="win-chrome-left">
-    <svg class="win-chrome-logo" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
-    <span class="win-chrome-title">Bricks Assets</span>
+    <a href="https://withbricks.com?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_chrome_logo" target="_blank" rel="noopener" data-track-cta="outbound_chrome_logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;">
+      <svg class="win-chrome-logo" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
+      <span class="win-chrome-title">Bricks Assets</span>
+    </a>
   </div>
   <div class="win-chrome-right">
     <button class="win-chrome-cta" onclick="openModal(event)">See it in action →</button>
@@ -658,6 +664,13 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 </div>
 
 <div class="window-frame" style="padding-top:32px;">
+
+<!-- Mobile brand row — the chrome bar (and its logo link) is display:none under 900px -->
+<a class="mobile-brand" href="https://withbricks.com?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_mobile_brand" target="_blank" rel="noopener" data-track-cta="outbound_mobile_brand">
+  <svg width="16" height="18" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
+  <span class="mb-name">Bricks</span>
+  <span class="mb-domain">withbricks.com →</span>
+</a>
 
 <!-- Nav removed — chrome bar serves as nav -->
 
