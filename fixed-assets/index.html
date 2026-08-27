@@ -115,7 +115,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--ink);ove
 .win-chrome{position:fixed;top:0;left:0;right:0;z-index:100;background:#f0f0f0;border-bottom:1px solid #ccc;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 8px}
 .win-chrome-left{display:flex;align-items:center;gap:8px}
 .win-chrome-logo{width:14px;height:16px;flex-shrink:0}
-.win-chrome-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid)}
+.win-chrome-title{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid);transition:color .15s}
+.win-chrome-brand-link{display:flex;align-items:center;gap:6px;text-decoration:none;color:inherit}
+.win-chrome-brand-arrow{font-size:10px;color:var(--mid);transition:color .15s}
+.win-chrome-brand-link:hover .win-chrome-title,.win-chrome-brand-link:hover .win-chrome-brand-arrow{color:var(--accent)}
 .mobile-brand{display:none}
 .mobile-brand .mb-name{font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
 .mobile-brand .mb-domain{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mid)}
@@ -650,9 +653,10 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 <!-- Windows chrome -->
 <div class="win-chrome" id="winChrome">
   <div class="win-chrome-left">
-    <a href="https://withbricks.com?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_chrome_logo" target="_blank" rel="noopener" data-track-cta="outbound_chrome_logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;">
+    <a href="https://withbricks.com?utm_source=go.withbricks.com&utm_medium=landing&utm_campaign=fixed_assets_chrome_logo" target="_blank" rel="noopener" data-track-cta="outbound_chrome_logo" class="win-chrome-brand-link">
       <svg class="win-chrome-logo" viewBox="1 1 22 22" fill="none"><path d="M2 7.5L12 13V22L2 16.5V7.5Z" fill="#4A4F5A"/><path d="M12 2L22 7.5L12 13L2 7.5L12 2Z" fill="#F0DCAF"/><path d="M22 7.5L12 13V22L22 16.5V7.5Z" fill="#C8785F"/></svg>
       <span class="win-chrome-title">Bricks Assets</span>
+      <span class="win-chrome-brand-arrow">↗</span>
     </a>
   </div>
   <div class="win-chrome-right">
