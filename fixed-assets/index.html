@@ -144,6 +144,8 @@ nav{max-width:1120px;margin:0 auto;padding:24px 40px;display:flex;justify-conten
 .cta:hover{background:var(--accent-hover)}
 .cta-accent{background:var(--accent);color:#fff}
 .cta-accent:hover{background:var(--accent-hover)}
+.cta-secondary{background:transparent;color:var(--ink);border:1px solid var(--rule-dark)}
+.cta-secondary:hover{background:var(--surface);border-color:var(--ink)}
 
 .divider{max-width:1120px;margin:0 auto;padding:0 40px}
 .divider hr{border:none;border-top:1px solid var(--rule)}
@@ -696,7 +698,10 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
   <div class="hero-text">
     <h1>Fixed asset depreciation that actually <span class="ties">ties.</span></h1>
     <p class="hero-sub">Your auditor shouldn't be the only person who knows what your assets are worth. Pull the NBV as of any date or close the month in the time it takes to <em>open</em> a spreadsheet.</p>
-    <a href="#" data-track-cta="cta_click_hero" onclick="openModal(event)" class="cta">Book a walkthrough →</a>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <a href="#" data-track-cta="cta_click_hero" onclick="openModal(event)" class="cta">Book a walkthrough →</a>
+      <a href="https://app.withbricks.com/get-started?product=fixedAssets" data-track-cta="cta_click_hero_signup" class="cta cta-secondary">Get started free →</a>
+    </div>
 
     <div class="hero-cta-detail">30 minutes. We load your actual data and show you your numbers live. Most customers are running within 2–4 weeks.</div>
   </div>
