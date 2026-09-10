@@ -146,6 +146,8 @@ nav{max-width:1120px;margin:0 auto;padding:24px 40px;display:flex;justify-conten
 .cta-accent:hover{background:var(--accent-hover)}
 .cta-secondary{background:transparent;color:var(--ink);border:1px solid var(--rule-dark)}
 .cta-secondary:hover{background:var(--surface);border-color:var(--ink)}
+.cta-secondary-invert{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.cta-secondary-invert:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}
 
 .divider{max-width:1120px;margin:0 auto;padding:0 40px}
 .divider hr{border:none;border-top:1px solid var(--rule)}
@@ -1325,7 +1327,10 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
         <div class="pq-attr">Finance Director, Medical Practice</div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:32px"><a href="#" data-track-cta="cta_click_mid2" onclick="openModal(event)" class="cta" style="background:var(--accent);color:#fff">Book a walkthrough →</a></div>
+    <div style="text-align:center;margin-top:32px;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
+      <a href="#" data-track-cta="cta_click_mid2" onclick="openModal(event)" class="cta" style="background:var(--accent);color:#fff">Book a walkthrough →</a>
+      <a href="https://app.withbricks.com/get-started?product=fixedAssets" data-track-cta="cta_click_mid2_signup" class="cta cta-secondary-invert">Try it free →</a>
+    </div>
   </div>
 </section>
 
@@ -1368,7 +1373,10 @@ nav,.hero,.outcomes,.moments,.table-stakes,.proof-inner,.pricing,.switching,.fin
 <section class="final-cta" id="final">
   <h2>Send us your spreadsheet.</h2>
   <p>Book 30 minutes. Email your file to sam.anderson@withbricks.com before the call and we'll have your numbers ready.</p>
-  <a href="#" data-track-cta="cta_click_bottom" onclick="openModal(event)" class="cta cta-accent">Send us your spreadsheet →</a>
+  <div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
+    <a href="#" data-track-cta="cta_click_bottom" onclick="openModal(event)" class="cta cta-accent">Send us your spreadsheet →</a>
+    <a href="https://app.withbricks.com/get-started?product=fixedAssets" data-track-cta="cta_click_bottom_signup" class="cta cta-secondary">Skip the call — start free →</a>
+  </div>
 </section>
 
 <div class="divider"><hr></div>
