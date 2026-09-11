@@ -2240,6 +2240,15 @@ updateStatus();
 document.querySelectorAll('[data-track-cta]').forEach(function(el) {
   el.addEventListener('click', function() {
     if (typeof gtag === 'function') gtag('event', el.dataset.trackCta, { page: window.location.pathname });
+    // Named PostHog event (parallel to demo_booked) for the free-signup CTAs specifically —
+    // generic autocapture already logs every click, but this gives a clean, filterable event
+    // plus which placement on the page it was clicked from.
+    if (window.posthog && el.dataset.trackCta.indexOf('_signup') !== -1) {
+      posthog.capture('signup_cta_clicked', {
+        source_page: location.pathname + location.search,
+        cta_id: el.dataset.trackCta
+      });
+    }
   });
 });
 
